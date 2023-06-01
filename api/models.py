@@ -7,7 +7,7 @@ class CustomUser(AbstractUser):
     line_id = models.CharField("LINE ID", max_length=30, unique=True)
 
     USERNAME_FIELD = "line_id"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["username"]
 
     def __str__(self):
         return self.username
