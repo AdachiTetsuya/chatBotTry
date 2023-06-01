@@ -32,9 +32,7 @@ class LineBotApiView(APIView):
 
         if event_type == "follow":
             user_id = get_user_id(event_obj)
-            logger.info(user_id)
             user_info = line_message.get_user_info(user_id)
-            logger.info(user_info)
             line_message.reply(
                 get_reply_token(event_obj), create_text_message_list(user_info["displayName"])
             )

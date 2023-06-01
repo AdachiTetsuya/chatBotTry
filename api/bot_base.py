@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import urllib.request
 
@@ -7,6 +8,8 @@ USER_INFO_URL = "https://api.line.me/v2/bot/profile/"
 LINE_ACCESS_TOKEN = os.getenv("LINE_ACCESS_TOKEN", "")
 
 HEADER = {"Content-Type": "application/json", "Authorization": "Bearer " + LINE_ACCESS_TOKEN}
+
+logger = logging.getLogger("api")
 
 
 class LineBotMSG:
@@ -24,4 +27,5 @@ class LineBotMSG:
         req = urllib.request.Request(USER_INFO_URL + user_id, HEADER)
         with urllib.request.urlopen(req) as res:
             body = res.read()
-            return body
+            logger.info(body)
+            return {"displayName": "哲哉"}
