@@ -6,10 +6,10 @@ import urllib.request
 import requests
 
 REPLY_ENDPOINT_URL = "https://api.line.me/v2/bot/message/reply"
-USER_INFO_URL = "https://api.line.me/v2/bot/profile/U9832203d5f9ab9edecff7fb10b003d77"
+USER_INFO_URL = "https://api.line.me/v2/bot/profile/"
 LINE_ACCESS_TOKEN = os.getenv("LINE_ACCESS_TOKEN", "")
 
-HEADER = {"Content-Type": "application/json", "Authorization": "Bearer " + LINE_ACCESS_TOKEN}
+HEADER = {"content-Type": "application/json", "Authorization": "Bearer " + LINE_ACCESS_TOKEN}
 
 logger = logging.getLogger("api")
 
@@ -26,7 +26,7 @@ class LineBotMSG:
             body = res.read()
 
     def get_user_info(self, user_id):
-        res = requests.get(USER_INFO_URL, HEADER)
-        text = res.text
-        logger.info(text)
-        return {"displayName": "哲哉"}
+        res = requests.get(USER_INFO_URL + user_id, headers=HEADER)
+        text_obj = json.loads(res.text)
+        logger.info(text_obj)
+        return text_obj
