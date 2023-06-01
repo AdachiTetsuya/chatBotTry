@@ -130,6 +130,20 @@ CORS_ALLOW_CREDENTIALS = True
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "no-reply@example.com")
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
 
+AWS_SES_REGION_NAME = "ap-northeast-1"
+AWS_SES_REGION_ENDPOINT = "email.ap-northeast-1.amazonaws.com"
+# エラー発生時にadminに送るメールの送信元
+SERVER_EMAIL = os.getenv("SERVER_EMAIL")
+
+SERVER_EMAIL = os.getenv("SERVER_EMAIL", DEFAULT_FROM_EMAIL)
+
+ADMINS = list(
+    zip(
+        os.getenv("ADMIN_NAMES", "").split(","),
+        os.getenv("ADMIN_EMAILS", "").split(","),
+    )
+)
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
