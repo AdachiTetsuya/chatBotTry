@@ -1,7 +1,7 @@
 from django.urls import path
 
-from . import views
+from .views import LineBotApiView
 
 urlpatterns = [
-    path("index", views.index, name="index"),
+    path("webhook/", LineBotApiView.as_view(), name="linebot-webhook"),
 ]
