@@ -24,7 +24,9 @@ class LineBotApiView(APIView):
         if len(res["events"]) > 0:
             data = res["events"][0]  # リストの中に辞書がひとつ
             if data["message"]:
-                line_message.reply(data["message"]["text"], create_text_message("テスト用ボットのテキスト"))
+                logger.info(data["replyToken"])
+
+                line_message.reply(data["replyToken"], create_text_message(data["message"]["text"]))
         else:
             response_text["text"] = "Webhookの確認"  # 確認時に返すレスポンス
         return Response(response_text, status=code)
