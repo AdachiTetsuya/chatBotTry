@@ -24,6 +24,7 @@ class LineBotApiView(APIView):
 
         if event_type == "message":
             user_id = get_user_id(event_obj)
+            logger.info(user_id)
             user_info = line_message.get_user_info(user_id)
             name = user_info["displayName"]
 

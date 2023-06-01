@@ -3,6 +3,8 @@ import logging
 import os
 import urllib.request
 
+import requests
+
 REPLY_ENDPOINT_URL = "https://api.line.me/v2/bot/message/reply"
 USER_INFO_URL = "https://api.line.me/v2/bot/profile/"
 LINE_ACCESS_TOKEN = os.getenv("LINE_ACCESS_TOKEN", "")
@@ -24,8 +26,7 @@ class LineBotMSG:
             body = res.read()
 
     def get_user_info(self, user_id):
-        req = urllib.request.Request(USER_INFO_URL + user_id, HEADER)
-        with urllib.request.urlopen(req) as res:
-            body = res.read()
-            logger.info(body)
-            return {"displayName": "哲哉"}
+        res = requests.get(USER_INFO_URL + user_id, HEADER)
+        text = res.text
+        logger.info(text)
+        return {"displayName": "哲哉"}
