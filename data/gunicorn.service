@@ -1,0 +1,19 @@
+[Unit]
+Description=gunicorn service
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+Type=notify
+User=ubuntu
+Group=ubuntu
+RuntimeDirectory=gunicorn
+WorkingDirectory=/home/ubuntu/chatBotTry
+ExecStart=/home/ubuntu/chatBotTry/.venv/bin/gunicorn be.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
