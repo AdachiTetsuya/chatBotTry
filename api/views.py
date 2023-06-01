@@ -12,7 +12,6 @@ from .utils import get_event_type_name, get_message_text, get_reply_token, get_u
 
 logger = logging.getLogger("api")
 
-
 line_message = LineBotMSG()
 
 
