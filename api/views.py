@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 
 from .bot_base import LineBotMSG
 from .bot_messages import create_text_message_list
-from .utils import get_event_type_name, get_message_text, get_reply_token
+from .utils import get_event_type_name, get_message_text, get_reply_token, get_user_id
 
 logger = logging.getLogger("api")
 
@@ -28,7 +28,13 @@ class LineBotApiView(APIView):
             line_message.reply(get_reply_token(event_obj), create_text_message_list(message))
 
         if event_type == "follow":
-            line_message.reply(get_reply_token(event_obj), create_text_message_list("こんにちわ"))
+            user_id = get_user_id(event_obj)
+            logger.info(user_id)
+            user_info = line_message.get_user_info(user_id)
+            logger.info(user_info)
+            line_message.reply(
+                get_reply_token(event_obj), create_text_message_list(user_info["displayName"])
+            )
         else:
             response_text = {"text": "正常に検索されました。"}  # レスポンスとして返す
         return Response(response_text, status=status.HTTP_200_OK)

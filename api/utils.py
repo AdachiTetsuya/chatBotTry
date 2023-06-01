@@ -11,3 +11,8 @@ def get_message_text(event_obj):
 def get_reply_token(event_obj):
     reply_token = event_obj["replyToken"]
     return reply_token
+
+
+def get_user_id(event_obj):
+    user_id = event_obj["source"]["userId"]
+    return user_id
