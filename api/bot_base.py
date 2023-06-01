@@ -1,7 +1,6 @@
 import json
 import logging
 import os
-import urllib.request
 
 import requests
 
@@ -21,9 +20,7 @@ class LineBotMSG:
     def reply(self, reply_token, messages):
         body = {"replyToken": reply_token, "messages": messages}
 
-        req = urllib.request.Request(REPLY_ENDPOINT_URL, json.dumps(body).encode(), HEADER)
-        with urllib.request.urlopen(req) as res:
-            body = res.read()
+        requests.post(REPLY_ENDPOINT_URL, data=json.dumps(body), headers=HEADER)
 
     def get_user_info(self, user_id):
         res = requests.get(USER_INFO_URL + user_id, headers=HEADER)

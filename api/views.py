@@ -8,7 +8,8 @@ from rest_framework.views import APIView
 
 from .bot_base import LineBotMSG
 from .bot_messages import create_text_message_list
-from .utils import get_event_type_name, get_reply_token, get_user_id
+from .models import CustomUser
+from .utils import get_event_type_name, get_message_text, get_reply_token, get_user_id
 
 logger = logging.getLogger("api")
 
@@ -24,15 +25,15 @@ class LineBotApiView(APIView):
 
         if event_type == "message":
             user_id = get_user_id(event_obj)
-            user_info = line_message.get_user_info(user_id)
-            name = user_info["displayName"]
 
-            # message = get_message_text(event_obj)
-            line_message.reply(get_reply_token(event_obj), create_text_message_list(name))
+            message = get_message_text(event_obj)
+            line_message.reply(get_reply_token(event_obj), create_text_message_list(message))
 
         if event_type == "follow":
             user_id = get_user_id(event_obj)
             user_info = line_message.get_user_info(user_id)
+            CustomUser.objects.create(user_info["displayName"], user_id)
+
             line_message.reply(
                 get_reply_token(event_obj), create_text_message_list(user_info["displayName"])
             )
