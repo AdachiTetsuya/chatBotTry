@@ -6,16 +6,11 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .about_user import save_user
+from api.sequences.follow import follow_event_function
+
 from .bot_base import LineBotMSG
-from .bot_messages import create_text_message_list, get_greeting_message, get_random_unknown_message
-from .utils import (
-    get_event_type_name,
-    get_message_text,
-    get_reply_token,
-    get_user_id,
-    is_text_message,
-)
+from .bot_messages import create_text_message_list, get_random_unknown_message
+from .utils import get_event_type_name, get_message_text, get_reply_token, is_text_message
 
 logger = logging.getLogger("api")
 
@@ -30,25 +25,17 @@ class LineBotApiView(APIView):
         event_type = get_event_type_name(event_obj)
 
         if event_type == "message":
-            user_id = get_user_id(event_obj)
             reply_token = get_reply_token(event_obj)
 
-            if is_text_message(event_obj):
-                message = get_message_text(event_obj)
-                line_message.reply(reply_token, create_text_message_list(message))
-            else:
+            if not is_text_message(event_obj):
                 message = get_random_unknown_message()
                 line_message.reply(reply_token, create_text_message_list(message))
+                return Response(status=status.HTTP_200_OK)
+
+            message = get_message_text(event_obj)
+            line_message.reply(reply_token, create_text_message_list(message))
 
         if event_type == "follow":
-            user_id = get_user_id(event_obj)
-            user_info = line_message.get_user_info(user_id)
-            reply_token = get_reply_token(event_obj)
+            follow_event_function(line_message, event_obj)
 
-            save_user(user_info["displayName"], user_id)
-
-            line_message.reply(
-                reply_token,
-                create_text_message_list(get_greeting_message(user_info["displayName"])),
-            )
-        return Response({"text": "正常に検索されました。"}, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)
