@@ -1,14 +1,20 @@
+import logging
+
 from api.models import SmartPoll, UserPollRelation
 
 from .serializers import CustomUserSerializer
+
+logger = logging.getLogger("api")
 
 
 def save_user(username, line_id):
     data = {"username": username, "line_id": line_id}
     serializer = CustomUserSerializer(data=data)
+    logger.info(serializer.is_valid())
     if serializer.is_valid():
         return serializer.save()
     else:
+        logger.info(serializer.errors)
         print(serializer.errors)
 
 
