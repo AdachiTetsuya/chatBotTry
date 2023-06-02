@@ -38,5 +38,5 @@ class LineBotApiView(APIView):
                 get_reply_token(event_obj), create_text_message_list(user_info["displayName"])
             )
         else:
-            response_text = {"text": "正常に検索されました。"}  # レスポンスとして返す
+            response_text = {"text": "正常に検索されました。"}
         return Response(response_text, status=status.HTTP_200_OK)
