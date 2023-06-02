@@ -19,25 +19,35 @@ class SmartPoll(models.Model):
     def __str__(self):
         return self.default_name
 
+    def get_temperature(self):
+        "温度を返す"
+        import random
+
+        k = random.uniform(-1, 1)
+        temperature = round(30 * k, 1)
+        return temperature
+
     class Meta:
         verbose_name_plural = "スマートポール"
 
 
-class BuddyInformation(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="buddy_information")
-    smart_poll = models.ForeignKey(SmartPoll, on_delete=models.CASCADE, related_name="user")
-    buddy_name = models.CharField("バディーネーム", max_length=50, blank=True)
-    buddy_sage = models.IntegerField(
-        "バディーの年齢", default=20, validators=[MinValueValidator(0), MaxValueValidator(130)]
+class UserPollRelation(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="poll_relation")
+    smart_poll = models.ForeignKey(
+        SmartPoll, on_delete=models.CASCADE, related_name="user_relation"
+    )
+    poll_name = models.CharField("ポールの名前", max_length=50, blank=True)
+    poll_age = models.IntegerField(
+        "ポールの年齢", default=20, validators=[MinValueValidator(0), MaxValueValidator(130)]
     )
 
     def save(self, *args, **kwargs):
-        if not self.buddy_name:
-            self.buddy_name = self.smart_poll.default_name
-        super(BuddyInformation, self).save(*args, **kwargs)
+        if not self.poll_name:
+            self.poll_name = self.smart_poll.default_name
+        super(UserPollRelation, self).save(*args, **kwargs)
 
     class Meta:
-        verbose_name_plural = "バディー情報"
+        verbose_name_plural = "ユーザとポールの関係"
 
 
 class UnknownMessage(models.Model):

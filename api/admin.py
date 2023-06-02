@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import BuddyInformation, CustomUser, GreetingMessage, SmartPoll, UnknownMessage
+from .models import CustomUser, GreetingMessage, SmartPoll, UnknownMessage, UserPollRelation
 
 
 @admin.register(CustomUser)
@@ -13,9 +13,9 @@ class SmartPollAdmin(admin.ModelAdmin):
     list_display = ["id", "default_name"]
 
 
-@admin.register(BuddyInformation)
-class BuddyInformationAdmin(admin.ModelAdmin):
-    list_display = ["id", "user", "smart_poll"]
+@admin.register(UserPollRelation)
+class UserPollRelationAdmin(admin.ModelAdmin):
+    list_display = ["id", "user", "smart_poll", "poll_name", "poll_age"]
 
 
 @admin.register(UnknownMessage)

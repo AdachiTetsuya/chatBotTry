@@ -3,6 +3,11 @@ def get_event_type_name(event_obj):
     return event_type
 
 
+def get_user_line_id(event_obj):
+    user_line_id = event_obj["source"]["userId"]
+    return user_line_id
+
+
 def is_text_message(event_obj):
     message_type = event_obj["message"]["type"]
     if message_type == "text":
