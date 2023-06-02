@@ -9,8 +9,9 @@ def create_text_message_list(*args):
 
 def get_greeting_message(displayName):
     message = GreetingMessage.objects.order_by("?").first()
-    formatted_message = message.replace(r"{displayName}", displayName)
-    return formatted_message
+    text = message.text
+    formatted_text = text.replace(r"{displayName}", displayName)
+    return formatted_text
 
 
 def get_random_unknown_message():
