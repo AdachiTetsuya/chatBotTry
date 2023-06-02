@@ -4,15 +4,15 @@ from .serializers import CustomUserSerializer
 
 
 def save_user(username, line_id):
-    data = {username: username, line_id: line_id}
+    data = {"username": username, "line_id": line_id}
     serializer = CustomUserSerializer(data=data)
     if serializer.is_valid():
         return serializer.save()
     else:
-        pass
+        print(serializer.errors)
 
 
-def bulk_create_user_poll_relation(user, user_line_id):
+def bulk_create_user_poll_relation(user, user_line_id=None):
     """
     新規ユーザの場合、UserPollRelation の create をする
 
