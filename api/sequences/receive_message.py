@@ -1,6 +1,8 @@
 import logging
 
 from api.bot_messages import create_text_message_list
+from api.data.operation import OPERATION_DATA
+from api.data.target import TARGET_VALUE_DATA
 from api.mecab_function import wakati_text
 from api.models import SmartPoll
 from api.utils import get_message_text
@@ -19,20 +21,47 @@ def receive_message_function(event_obj):
         list[dict[str, str]] : reply メソッド用にフォーマットした送信メッセージ
     """
 
-    # sequence = judge_sequence_from_message(event_obj)
-    sequence = 1
+    sequence = judge_sequence_from_message(event_obj)
 
-    if sequence == 1:
-        text1 = "ポールの一覧を表示します"
-        name_list = [item.default_name for item in SmartPoll.objects.all()]
-        text2 = "\n".join(name_list)
+    if sequence["target"] & sequence["operation"]:
+        if sequence["target"] == "smart_polls":
+            if sequence["operation"] == "list":
+                text1 = "ポールの一覧を表示します"
+                name_list = [item.default_name for item in SmartPoll.objects.all()]
+                text2 = "\n".join(name_list)
 
-        result = create_text_message_list(text1, text2)
-        return result
+                result = create_text_message_list(text1, text2)
+                return result
+
+    result = create_text_message_list("わからない")
+    return result
 
 
 def judge_sequence_from_message(event_obj):
     message = get_message_text(event_obj)
     text_result = wakati_text(message)
-    logger.info(text_result)
-    return 1
+
+    target = ""
+    operation = ""
+
+    for k, v_list in TARGET_VALUE_DATA.items():
+        for v in v_list:
+            if v in text_result:
+                target = k
+                break
+        else:
+            continue
+        break
+
+    for k, v_list in OPERATION_DATA.items():
+        for v in v_list:
+            if v in text_result:
+                operation = k
+                break
+        else:
+            continue
+        break
+
+    result = {"target": target, "operation": operation}
+
+    return result
