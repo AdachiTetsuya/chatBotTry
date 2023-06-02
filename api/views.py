@@ -6,9 +6,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .about_user import save_user
 from .bot_base import LineBotMSG
 from .bot_messages import create_text_message_list, get_greeting_message, get_random_unknown_message
-from .models import CustomUser
 from .utils import (
     get_event_type_name,
     get_message_text,
@@ -45,7 +45,7 @@ class LineBotApiView(APIView):
             user_info = line_message.get_user_info(user_id)
             reply_token = get_reply_token(event_obj)
 
-            CustomUser.objects.create(username=user_info["displayName"], line_id=user_id)
+            save_user(user_info["displayName"], user_id)
 
             line_message.reply(
                 reply_token,
