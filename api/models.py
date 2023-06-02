@@ -26,7 +26,7 @@ class SmartPoll(models.Model):
 class BuddyInformation(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="buddy_information")
     smart_poll = models.ForeignKey(SmartPoll, on_delete=models.CASCADE, related_name="user")
-    buddy_name = models.CharField("バディーネーム", max_length=50, default="")
+    buddy_name = models.CharField("バディーネーム", max_length=50, blank=True)
     buddy_sage = models.IntegerField(
         "バディーの年齢", default=20, validators=[MinValueValidator(0), MaxValueValidator(130)]
     )
