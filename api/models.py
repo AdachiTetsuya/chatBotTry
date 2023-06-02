@@ -10,3 +10,14 @@ class CustomUser(models.Model):
 
     class Meta:
         verbose_name_plural = "Line アカウント"
+
+
+class UnknownMessage(models.Model):
+    text = models.TextField()
+
+
+class GreetingMessage(models.Model):
+    text = models.TextField()
+
+    class Meta:
+        verbose_name_plural = "あいさつメッセージ"

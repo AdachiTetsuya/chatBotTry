@@ -3,6 +3,13 @@ def get_event_type_name(event_obj):
     return event_type
 
 
+def is_text_message(event_obj):
+    message_type = event_obj["message"]["type"]
+    if message_type == "text":
+        return True
+    return False
+
+
 def get_message_text(event_obj):
     message = event_obj["message"]["text"]
     return message
