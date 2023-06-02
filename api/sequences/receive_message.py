@@ -19,15 +19,13 @@ def receive_message_function(event_obj):
         list[dict[str, str]] : reply メソッド用にフォーマットした送信メッセージ
     """
 
-    sequence = judge_sequence_from_message(event_obj)
+    # sequence = judge_sequence_from_message(event_obj)
+    sequence = 1
 
     if sequence == 1:
         text1 = "ポールの一覧を表示します"
-        text2 = ""
-        for item in SmartPoll.objects.all():
-            text2.join(item.default_name)
-            text2.join("\n")
-        logger.info(text2)
+        name_list = [item.default_name for item in SmartPoll.objects.all()]
+        text2 = "\n".join(name_list)
 
         result = create_text_message_list(text1, text2)
         return result
