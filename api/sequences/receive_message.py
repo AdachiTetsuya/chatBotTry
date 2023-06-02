@@ -27,6 +27,7 @@ def receive_message_function(event_obj):
         for item in SmartPoll.objects.all():
             text2.join(item.default_name)
             text2.join("\n")
+        logger.info(text2)
 
         result = create_text_message_list(text1, text2)
         return result
