@@ -6,11 +6,12 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.sequences.follow import follow_event_function
+from api.sequences.on_follow import follow_event_function
+from api.sequences.receive_message import receive_message_function
 
 from .bot_base import LineBotMSG
 from .bot_messages import create_text_message_list, get_random_unknown_message
-from .utils import get_event_type_name, get_message_text, get_reply_token, is_text_message
+from .utils import get_event_type_name, get_reply_token, is_text_message
 
 logger = logging.getLogger("api")
 
@@ -32,10 +33,13 @@ class LineBotApiView(APIView):
                 line_message.reply(reply_token, create_text_message_list(message))
                 return Response(status=status.HTTP_200_OK)
 
-            message = get_message_text(event_obj)
-            line_message.reply(reply_token, create_text_message_list(message))
+            message = receive_message_function(event_obj)
+            line_message.reply(reply_token, message)
 
         if event_type == "follow":
-            follow_event_function(line_message, event_obj)
+            reply_token = get_reply_token(event_obj)
+
+            message = follow_event_function(line_message, event_obj)
+            line_message.reply(reply_token, message)
 
         return Response(status=status.HTTP_200_OK)
