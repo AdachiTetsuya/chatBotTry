@@ -23,7 +23,7 @@ def receive_message_function(event_obj):
 
     sequence = judge_sequence_from_message(event_obj)
 
-    if sequence["target"] & sequence["operation"]:
+    if sequence["target"] and sequence["operation"]:
         if sequence["target"] == "smart_polls":
             if sequence["operation"] == "list":
                 text1 = "ポールの一覧を表示します"
