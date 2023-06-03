@@ -10,8 +10,12 @@ from api.sequences.on_follow import follow_event_function
 from api.sequences.receive_message import receive_message_function
 
 from .bot_base import LineBotMSG
-from .bot_messages import create_text_message_list, get_random_unknown_message
-from .utils import get_event_type_name, get_reply_token, is_text_message
+from .bot_messages import (
+    create_sticker_message_list,
+    create_text_message_list,
+    get_random_unknown_message,
+)
+from .utils import get_event_type_name, get_message_type, get_reply_token
 
 logger = logging.getLogger("api")
 
@@ -28,13 +32,20 @@ class LineBotApiView(APIView):
         if event_type == "message":
             reply_token = get_reply_token(event_obj)
 
-            if not is_text_message(event_obj):
+            message_type = get_message_type(event_obj)
+
+            if message_type == "text":
+                message = receive_message_function(event_obj)
+                line_message.reply(reply_token, message)
+
+            elif message_type == "sticker":
+                message = create_sticker_message_list(("446", "1988"))
+                pass
+
+            else:
                 message = get_random_unknown_message()
                 line_message.reply(reply_token, create_text_message_list(message))
                 return Response(status=status.HTTP_200_OK)
-
-            message = receive_message_function(event_obj)
-            line_message.reply(reply_token, message)
 
         if event_type == "follow":
             reply_token = get_reply_token(event_obj)

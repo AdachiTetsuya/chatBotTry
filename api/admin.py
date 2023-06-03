@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from .models import CustomUser, GreetingMessage, SmartPoll, UnknownMessage, UserPollRelation
+from .models import (
+    BroadCastMessage,
+    CustomUser,
+    GreetingMessage,
+    SmartPoll,
+    UnknownMessage,
+    UserPollRelation,
+)
 
 
 @admin.register(CustomUser)
@@ -26,3 +33,8 @@ class UnknownMessageAdmin(admin.ModelAdmin):
 @admin.register(GreetingMessage)
 class GreetingMessageAdmin(admin.ModelAdmin):
     list_display = ["id", "text"]
+
+
+@admin.register(BroadCastMessage)
+class BroadCastMessageAdmin(admin.ModelAdmin):
+    list_display = ["id", "text", "on_publish", "updated_at"]

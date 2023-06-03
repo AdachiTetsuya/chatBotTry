@@ -15,6 +15,15 @@ def create_image_message_list(*args):
     return message
 
 
+def create_sticker_message_list(*args):
+    if args:
+        message = [
+            {"type": "sticker", "packageId": tuple_item[0], "stickerId": tuple_item[1]}
+            for tuple_item in args
+        ]
+    return message
+
+
 def get_greeting_message(displayName):
     message = GreetingMessage.objects.order_by("?").first()
     text = message.text

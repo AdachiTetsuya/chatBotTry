@@ -67,3 +67,13 @@ class GreetingMessage(models.Model):
 
     class Meta:
         verbose_name_plural = "あいさつメッセージ"
+
+
+class BroadCastMessage(models.Model):
+    text = models.TextField()
+    on_publish = models.BooleanField("公開する", default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "一斉送信メッセージ"

@@ -8,11 +8,9 @@ def get_user_line_id(event_obj):
     return user_line_id
 
 
-def is_text_message(event_obj):
+def get_message_type(event_obj):
     message_type = event_obj["message"]["type"]
-    if message_type == "text":
-        return True
-    return False
+    return message_type
 
 
 def get_message_text(event_obj):
