@@ -40,6 +40,7 @@ class LineBotApiView(APIView):
 
             elif message_type == "sticker":
                 message = create_sticker_message_list(("446", "1988"))
+                line_message.reply(reply_token, message)
                 pass
 
             else:
