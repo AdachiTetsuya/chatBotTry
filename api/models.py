@@ -15,6 +15,7 @@ class CustomUser(models.Model):
 
 class SmartPoll(models.Model):
     default_name = models.CharField("ポール名", max_length=30)
+    can_sky_photo = models.BooleanField("天空カメラの有無", default=False)
 
     def __str__(self):
         return self.default_name
@@ -26,6 +27,13 @@ class SmartPoll(models.Model):
         k = random.uniform(-1, 1)
         temperature = round(30 * k, 1)
         return temperature
+
+    def get_sky_photo(self):
+        "天空写真のURLを返す"
+        url = (
+            "https://chat-bot-try-bucket.s3.ap-northeast-1.amazonaws.com/ocean-gdf70d992f_1280.jpg"
+        )
+        return url
 
     class Meta:
         verbose_name_plural = "スマートポール"
