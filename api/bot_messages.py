@@ -7,6 +7,14 @@ def create_text_message_list(*args):
     return message
 
 
+def create_image_message_list(*args):
+    if args:
+        message = [
+            {"type": "image", "originalContentUrl": url, "previewImageUrl": url} for url in args
+        ]
+    return message
+
+
 def get_greeting_message(displayName):
     message = GreetingMessage.objects.order_by("?").first()
     text = message.text

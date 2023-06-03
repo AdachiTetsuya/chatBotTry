@@ -1,6 +1,6 @@
 import logging
 
-from api.bot_messages import create_text_message_list
+from api.bot_messages import create_image_message_list, create_text_message_list
 from api.data.operation import OPERATION_DATA, SKY_PHOTO
 from api.data.target import TARGET_VALUE_DATA
 from api.mecab_function import wakati_text
@@ -29,13 +29,9 @@ def receive_message_function(event_obj):
         if sequence["operation"] == "sky_photo":
             if smart_poll := SmartPoll.objects.filter(can_sky_photo=True).first():
                 url = smart_poll.get_sky_photo()
-                result = [
-                    {
-                        "type": "image",
-                        "originalContentUrl": url,
-                        "previewImageUrl": url,
-                    }
-                ]
+                text_list = create_text_message_list("今日の空の写真です")
+                image_list = create_image_message_list(url)
+                result = text_list.extend(image_list)
                 return result
 
         if sequence["operation"] == "list":
