@@ -5,6 +5,8 @@ import requests
 
 REPLY_ENDPOINT_URL = "https://api.line.me/v2/bot/message/reply"
 USER_INFO_URL = "https://api.line.me/v2/bot/profile/"
+PUSH_MESSAGE_URL = "https://api.line.me/v2/bot/message/push"
+
 LINE_ACCESS_TOKEN = os.getenv("LINE_ACCESS_TOKEN", "")
 
 HEADER = {"content-Type": "application/json", "Authorization": "Bearer " + LINE_ACCESS_TOKEN}
@@ -47,3 +49,13 @@ class LineBotMSG:
         res = requests.get(USER_INFO_URL + user_id, headers=HEADER)
         text_obj = json.loads(res.text)
         return text_obj
+
+    def push_message(self, user_line_id, messages):
+        """プッシュメッセージ送信用メソッド
+
+        LINE の プッシュメッセージ送信用の API を叩く
+
+        Args:
+            user_line_id (str): 送信先のユーザのラインID
+            messages (list[dict[str, str]]): 返信するメッセージ内容
+        """

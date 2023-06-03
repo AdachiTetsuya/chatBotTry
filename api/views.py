@@ -11,7 +11,7 @@ from api.sequences.receive_message import receive_message_function
 
 from .bot_base import LineBotMSG
 from .bot_messages import create_text_message_list, get_random_unknown_message
-from .utils import get_event_type_name, get_reply_token, is_text_message
+from .utils import get_event_type_name, get_reply_token, get_user_line_id, is_text_message
 
 logger = logging.getLogger("api")
 
@@ -41,5 +41,7 @@ class LineBotApiView(APIView):
 
             message = follow_event_function(line_message, event_obj)
             line_message.reply(reply_token, message)
+
+        line_message.push_message(get_user_line_id(event_obj), create_text_message_list("さようなら"))
 
         return Response(status=status.HTTP_200_OK)
