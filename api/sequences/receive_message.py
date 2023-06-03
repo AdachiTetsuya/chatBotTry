@@ -25,7 +25,7 @@ def receive_message_function(event_obj):
 
     sequence = judge_sequence_from_message(event_obj)
 
-    if sequence["target"] and sequence["operation"]:
+    if sequence["operation"]:
         if sequence["operation"] == "sky_photo":
             if smart_poll := SmartPoll.objects.filter(can_sky_photo=True).first():
                 url = smart_poll.get_sky_photo()
