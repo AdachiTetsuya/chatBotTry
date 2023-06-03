@@ -59,3 +59,5 @@ class LineBotMSG:
             user_line_id (str): 送信先のユーザのラインID
             messages (list[dict[str, str]]): 返信するメッセージ内容
         """
+        body = {"to": user_line_id, "messages": messages}
+        requests.post(PUSH_MESSAGE_URL, data=json.dumps(body), headers=HEADER)
