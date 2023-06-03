@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from api.data.sticker_data import get_random_sticker
 from api.sequences.on_follow import follow_event_function
 from api.sequences.receive_message import receive_message_function
 
@@ -39,7 +40,7 @@ class LineBotApiView(APIView):
                 line_message.reply(reply_token, message)
 
             elif message_type == "sticker":
-                message = create_sticker_message_list(("446", "1988"))
+                message = create_sticker_message_list(get_random_sticker())
                 line_message.reply(reply_token, message)
                 pass
 
