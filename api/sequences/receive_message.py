@@ -31,7 +31,8 @@ def receive_message_function(event_obj):
                 url = smart_poll.get_sky_photo()
                 text_list = create_text_message_list("今日の空の写真です")
                 image_list = create_image_message_list(url)
-                return text_list.extend(image_list)
+                text_list.extend(image_list)
+                return text_list
 
         if sequence["operation"] == "list":
             if sequence["target"] == "smart_polls":
