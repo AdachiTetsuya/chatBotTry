@@ -29,11 +29,13 @@ def receive_message_function(event_obj):
         if sequence["operation"] == "sky_photo":
             if smart_poll := SmartPoll.objects.filter(can_sky_photo=True).first():
                 url = smart_poll.get_sky_photo()
-                result = {
-                    "type": "image",
-                    "originalContentUrl": url,
-                    "previewImageUrl": url,
-                }
+                result = [
+                    {
+                        "type": "image",
+                        "originalContentUrl": url,
+                        "previewImageUrl": url,
+                    }
+                ]
                 return result
 
         if sequence["operation"] == "list":
