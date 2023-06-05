@@ -1,10 +1,11 @@
 import logging
 
-from api.bot_messages import create_image_message_list, create_text_message_list
-from api.data.operation import OPERATION_DATA, SKY_PHOTO
-from api.data.target import TARGET_VALUE_DATA
+from api.bot_messages import create_text_message_list
+from api.data.operation import OPERATION_DATA
 from api.mecab_function import wakati_text
-from api.models import SmartPoll, UserPollRelation
+from api.models import UserPollRelation
+from api.sequences.etc_func import sky_photo
+from api.sequences.response_message import everyone_response, single_response
 from api.utils import get_message_text, get_user_line_id
 
 logger = logging.getLogger("api")
@@ -22,41 +23,32 @@ def receive_message_function(event_obj):
     """
 
     line_id = get_user_line_id(event_obj)
+    user_poll_relations = UserPollRelation.objects.filter(user__line_id=line_id)
 
-    sequence = judge_sequence_from_message(event_obj)
+    sequence = judge_sequence_from_message(event_obj, user_poll_relations)
 
     if sequence["operation"]:
         if sequence["operation"] == "sky_photo":
-            if smart_poll := SmartPoll.objects.filter(can_sky_photo=True).first():
-                url = smart_poll.get_sky_photo()
-                text_list = create_text_message_list("今日の空の写真です")
-                image_list = create_image_message_list(url)
-                text_list.extend(image_list)
-                return text_list
+            return sky_photo()
 
-        if sequence["operation"] == "list":
-            if sequence["target"] == "smart_polls":
-                text1 = "ポールの一覧を表示します"
-                name_list = [
-                    item.poll_name
-                    for item in UserPollRelation.objects.filter(user__line_id=line_id)
-                ]
-                text2 = "\n".join(name_list)
+        if sequence["operation"] == "everyone_response":
+            return everyone_response(user_poll_relations)
 
-                result = create_text_message_list(text1, text2)
-                return result
+        if sequence["operation"] == "single_response":
+            return single_response(sequence["target"])
 
     result = create_text_message_list("わからない")
     return result
 
 
-def judge_sequence_from_message(event_obj):
+def judge_sequence_from_message(event_obj, user_poll_relations):
     message = get_message_text(event_obj)
     text_result = wakati_text(message)
 
+    poll_name_list = [item.poll_name for item in user_poll_relations]
+
     operation = ""
     target = ""
-    post_data = ""
 
     for k, v_list in OPERATION_DATA.items():
         for v in v_list:
@@ -67,20 +59,10 @@ def judge_sequence_from_message(event_obj):
             continue
         break
 
-    for v in SKY_PHOTO:
-        if v in text_result:
-            operation = "sky_photo"
-            break
+    for i, poll_name in enumerate(poll_name_list):
+        if poll_name in text_result:
+            operation = "single_response"
+            target = user_poll_relations[i]
 
-    for k, v_list in TARGET_VALUE_DATA.items():
-        for v in v_list:
-            if v in text_result:
-                target = k
-                break
-        else:
-            continue
-        break
-
-    result = {"operation": operation, "target": target, "post_data": post_data}
-
+    result = {"operation": operation, "target": target}
     return result

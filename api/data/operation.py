@@ -1,3 +1,1 @@
-OPERATION_DATA = {"list": ["一覧", "いちらん"], "post": ["変更", "更新"]}
-
-SKY_PHOTO = ["空", "写真", "夜空"]
+OPERATION_DATA = {"everyone_response": ["みんな", "皆"], "sky_photo": ["空", "夜空", "雲"]}

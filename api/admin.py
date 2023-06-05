@@ -4,6 +4,7 @@ from .models import (
     BroadCastMessage,
     CustomUser,
     GreetingMessage,
+    ResponseMessage,
     SmartPoll,
     UnknownMessage,
     UserPollRelation,
@@ -32,6 +33,11 @@ class UnknownMessageAdmin(admin.ModelAdmin):
 
 @admin.register(GreetingMessage)
 class GreetingMessageAdmin(admin.ModelAdmin):
+    list_display = ["id", "text"]
+
+
+@admin.register(ResponseMessage)
+class ResponseMessageAdmin(admin.ModelAdmin):
     list_display = ["id", "text"]
 
 

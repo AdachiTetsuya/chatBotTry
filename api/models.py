@@ -58,15 +58,22 @@ class UserPollRelation(models.Model):
         verbose_name_plural = "ユーザとポールの関係"
 
 
-class UnknownMessage(models.Model):
-    text = models.TextField()
-
-
 class GreetingMessage(models.Model):
-    text = models.TextField()
+    text = models.CharField(max_length=200)
 
     class Meta:
         verbose_name_plural = "あいさつメッセージ"
+
+
+class ResponseMessage(models.Model):
+    text = models.CharField(max_length=200)
+
+    class Meta:
+        verbose_name_plural = "呼ばれたときのメッセージ"
+
+
+class UnknownMessage(models.Model):
+    text = models.CharField(max_length=200)
 
 
 class BroadCastMessage(models.Model):
