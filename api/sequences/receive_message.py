@@ -4,7 +4,7 @@ from api.bot_messages import create_text_message_list
 from api.data.operation import OPERATION_DATA
 from api.mecab_function import wakati_text
 from api.models import UserPollRelation
-from api.sequences.etc_func import sky_photo
+from api.sequences.etc_func import show_temperature, sky_photo
 from api.sequences.response_message import everyone_response, single_response
 from api.utils import get_message_text, get_user_line_id
 
@@ -31,10 +31,13 @@ def receive_message_function(event_obj):
         if sequence["operation"] == "sky_photo":
             return sky_photo()
 
-        if sequence["operation"] == "everyone_response":
+        elif sequence["operation"] == "show_temperature":
+            return show_temperature()
+
+        elif sequence["operation"] == "everyone_response":
             return everyone_response(user_poll_relations)
 
-        if sequence["operation"] == "single_response":
+        elif sequence["operation"] == "single_response":
             return single_response(sequence["target"])
 
     result = create_text_message_list("わからない")
@@ -59,6 +62,7 @@ def judge_sequence_from_message(event_obj, user_poll_relations):
             continue
         break
 
+    # 名前が入ってる場合の処理
     for i, poll_name in enumerate(poll_name_list):
         if poll_name in text_result:
             operation = "single_response"

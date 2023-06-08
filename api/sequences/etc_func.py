@@ -1,5 +1,6 @@
 from api.bot_messages import create_image_message_list, create_text_message_list
 from api.models import SmartPoll
+from api.utils import judge_comment_from_temperature
 
 
 def sky_photo():
@@ -9,3 +10,11 @@ def sky_photo():
         image_list = create_image_message_list(url)
         text_list.extend(image_list)
         return text_list
+
+
+def show_temperature():
+    smart_poll = SmartPoll.objects.first()
+    temperature = smart_poll.get_temperature()
+    comment = judge_comment_from_temperature(temperature)
+    text_list = create_text_message_list("今日の気温は{}です。{}".format(temperature, comment))
+    return text_list

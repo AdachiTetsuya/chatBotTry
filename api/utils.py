@@ -21,3 +21,22 @@ def get_message_text(event_obj):
 def get_reply_token(event_obj):
     reply_token = event_obj["replyToken"]
     return reply_token
+
+
+def judge_comment_from_temperature(temperature):
+    result = ""
+
+    if temperature < 0:
+        result = "めっちゃ寒いっすね。"
+    elif temperature >= 0 and temperature < 10:
+        result = "寒いっすね"
+    elif temperature >= 10 and temperature < 20:
+        result = "ちょうど良いっすね。"
+    elif temperature >= 20 and temperature < 30:
+        result = "あったかいっすね。"
+    elif temperature >= 30 and temperature < 40:
+        result = "暑いっすね。"
+    elif temperature <= 40:
+        result = "めっちゃ暑いっすね。"
+
+    return result

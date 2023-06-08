@@ -48,6 +48,8 @@ class UserPollRelation(models.Model):
     poll_age = models.IntegerField(
         "ポールの年齢", default=20, validators=[MinValueValidator(0), MaxValueValidator(130)]
     )
+    is_buddy = models.BooleanField("バディかどうか", default=False)
+    is_primary = models.BooleanField("プライマリー指定", default=False)
 
     def save(self, *args, **kwargs):
         if not self.poll_name:
