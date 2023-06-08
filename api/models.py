@@ -24,8 +24,8 @@ class SmartPoll(models.Model):
         "温度を返す"
         import random
 
-        k = random.uniform(-1, 1)
-        temperature = round(30 * k, 1)
+        k = random.uniform(-0.1, 2.2)
+        temperature = round(20 * k, 1)
         return temperature
 
     def get_sky_photo(self):
