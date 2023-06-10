@@ -40,3 +40,22 @@ def judge_comment_from_temperature(temperature):
         result = "めっちゃ暑いっすね。"
 
     return result
+
+
+def get_primary_poll(user_poll_relations):
+    result = ""
+
+    for user_poll in user_poll_relations:
+        if user_poll.is_primary:
+            result = user_poll
+
+    return result
+
+
+def get_buddy_not_primary_poll(user_poll_relations):
+    buddy_poll_list = [
+        user_poll
+        for user_poll in user_poll_relations
+        if user_poll.is_buddy and not user_poll.is_primary
+    ]
+    return buddy_poll_list
