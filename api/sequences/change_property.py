@@ -29,7 +29,7 @@ def show_change_prop_list(target):
 
 
 def new_name_input_prompt(user: CustomUser):
-    (user_sequence,) = UserSequence.objects.get_or_create(user=user)
+    user_sequence, created = UserSequence.objects.get_or_create(user=user)
     user_sequence.is_change_poll_name = True
     user_sequence.save()
 
