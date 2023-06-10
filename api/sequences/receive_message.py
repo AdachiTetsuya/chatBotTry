@@ -4,7 +4,13 @@ from api.bot_messages import create_text_message_list
 from api.data.operation import OPERATION_DATA, PERSONAL_OPERATION_DATA
 from api.mecab_function import wakati_text
 from api.models import UserPollRelation
-from api.sequences.about_buddy import register_MB, remove_MB, show_MB_operation_list
+from api.sequences.about_buddy import (
+    register_MB,
+    register_primary,
+    remove_MB,
+    remove_primary,
+    show_MB_operation_list,
+)
 from api.sequences.etc_func import show_temperature, sky_photo
 from api.sequences.response_message import everyone_response, single_response
 from api.utils import get_message_text, get_user_line_id
@@ -49,6 +55,12 @@ def receive_message_function(event_obj):
 
         elif operation == "remove_MB":
             return remove_MB(sequence["target"])
+
+        elif operation == "register_primary":
+            return register_primary(sequence["target"], user_poll_relations)
+
+        elif operation == "remove_primary":
+            return remove_primary(sequence["target"], user_poll_relations)
 
     result = create_text_message_list("わからない")
     return result
