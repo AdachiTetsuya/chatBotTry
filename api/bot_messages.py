@@ -33,8 +33,12 @@ def create_button_list_message_list(choice_list):
         for item in choice_list
     ]
     message = {
-        "type": "bubble",
-        "body": {"type": "box", "layout": "vertical", "contents": contents_list},
+        "type": "flex",
+        "altText": "flexMessageです",
+        "contents": {
+            "type": "bubble",
+            "body": {"type": "box", "layout": "vertical", "contents": contents_list},
+        },
     }
     return [message]
 
