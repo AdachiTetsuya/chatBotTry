@@ -1,0 +1,20 @@
+{
+    "type": "template",
+    "altText": "This is a buttons template",
+    "template": {
+      "type": "buttons",
+      "text": "Please select",
+      "actions": [
+        {
+          "type": "message",
+          "label": "Hello",
+          "text": "こんにちは"
+        },
+        {
+          "type": "message",
+          "label": "smile",
+          "uri": "面白いね"
+        }
+      ]
+    }
+  }

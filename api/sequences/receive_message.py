@@ -4,6 +4,7 @@ from api.bot_messages import create_text_message_list
 from api.data.operation import OPERATION_DATA
 from api.mecab_function import wakati_text
 from api.models import UserPollRelation
+from api.sequences.about_buddy import show_MB_operation_list
 from api.sequences.etc_func import show_temperature, sky_photo
 from api.sequences.response_message import everyone_response, single_response
 from api.utils import get_message_text, get_user_line_id
@@ -40,6 +41,9 @@ def receive_message_function(event_obj):
         elif sequence["operation"] == "single_response":
             return single_response(sequence["target"])
 
+        elif sequence["operation"] == "show_MB_operation_list":
+            return show_MB_operation_list(user_poll_relations)
+
     result = create_text_message_list("わからない")
     return result
 
@@ -54,13 +58,18 @@ def judge_sequence_from_message(event_obj, user_poll_relations):
     target = ""
 
     for k, v_list in OPERATION_DATA.items():
-        for v in v_list:
-            if v in text_result:
+        if type(v_list[0]) is str:
+            for v in v_list:
+                if v in text_result:
+                    operation = k
+                    break
+            else:
+                continue
+            break
+        else:
+            if set(v_list[0]).issubset(text_result):
                 operation = k
                 break
-        else:
-            continue
-        break
 
     # 名前が入ってる場合の処理
     for i, poll_name in enumerate(poll_name_list):

@@ -4,7 +4,7 @@ from .models import GreetingMessage, UnknownMessage
 def create_text_message_list(*args):
     if args:
         message = [{"type": "text", "text": msg} for msg in args]
-    return message
+        return message
 
 
 def create_image_message_list(*args):
@@ -12,7 +12,7 @@ def create_image_message_list(*args):
         message = [
             {"type": "image", "originalContentUrl": url, "previewImageUrl": url} for url in args
         ]
-    return message
+        return message
 
 
 def create_sticker_message_list(*args):
@@ -21,7 +21,19 @@ def create_sticker_message_list(*args):
             {"type": "sticker", "packageId": tuple_item[0], "stickerId": tuple_item[1]}
             for tuple_item in args
         ]
-    return message
+        return message
+
+
+def create_button_template_message_list(choice_list):
+    actions_list = [
+        {"type": "message", "label": "choice_text", "text": item} for item in choice_list
+    ]
+    message = {
+        "type": "template",
+        "altText": "This is a buttons template",
+        "template": {"type": "buttons", "text": "Please select", "actions": actions_list},
+    }
+    return [message]
 
 
 def get_greeting_message(displayName):
