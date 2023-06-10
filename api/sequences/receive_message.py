@@ -11,7 +11,7 @@ from api.sequences.about_buddy import (
     remove_primary,
     show_MB_operation_list,
 )
-from api.sequences.change_property import show_change_prop_obj_list
+from api.sequences.change_property import show_change_prop_list, show_change_prop_obj_list
 from api.sequences.etc_func import show_temperature, sky_photo
 from api.sequences.response_message import everyone_response, single_response
 from api.utils import get_message_text, get_user_line_id
@@ -34,7 +34,7 @@ def receive_message_function(event_obj):
     user = CustomUser.objects.get(line_id=line_id)
     user_poll_relations = UserPollRelation.objects.filter(user=user)
 
-    sequence = judge_sequence_from_message(event_obj, user_poll_relations)
+    sequence = judge_sequence_from_message(event_obj, user_poll_relations, user)
 
     if operation := sequence["operation"]:
         if operation == "sky_photo":
@@ -67,28 +67,20 @@ def receive_message_function(event_obj):
         elif operation == "show_change_prop_obj_list":
             return show_change_prop_obj_list(user_poll_relations)
 
+        elif operation == "show_change_prop_list":
+            return show_change_prop_list(sequence["target"])
+
     result = create_text_message_list("わからない")
     return result
 
 
-def judge_sequence_from_message(event_obj, user_poll_relations):
+def judge_sequence_from_message(event_obj, user_poll_relations, user):
     message = get_message_text(event_obj)
     text_result = wakati_text(message)
 
     poll_name_list = [item.poll_name for item in user_poll_relations]
 
     result = {"operation": "", "target": ""}
-
-    for k, v_list in OPERATION_DATA.items():
-        if type(v_list[0]) is str:
-            for v in v_list:
-                if v in text_result:
-                    result["operation"] = k
-                    return result
-        else:
-            if set(v_list[0]).issubset(text_result):
-                result["operation"] = k
-                return result
 
     # 名前が入ってる場合の処理
     for i, poll_name in enumerate(poll_name_list):
@@ -110,5 +102,24 @@ def judge_sequence_from_message(event_obj, user_poll_relations):
 
         result["operation"] = "single_response"
         result["target"] = user_poll_relations[i]
+
+    # 「私」という言葉が入ってる場合の処理
+    if "私" in text_result:
+        for k, v_list in PERSONAL_OPERATION_DATA.items():
+            if set(v_list[0]).issubset(text_result):
+                result["operation"] = k
+                result["target"] = user
+                return result
+
+    for k, v_list in OPERATION_DATA.items():
+        if type(v_list[0]) is str:
+            for v in v_list:
+                if v in text_result:
+                    result["operation"] = k
+                    return result
+        else:
+            if set(v_list[0]).issubset(text_result):
+                result["operation"] = k
+                return result
 
     return result

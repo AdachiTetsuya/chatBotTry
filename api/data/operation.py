@@ -11,4 +11,5 @@ PERSONAL_OPERATION_DATA = {
     "remove_MB": [["MyBuddy", "解除"]],
     "register_primary": [["プライマリー", "登録"]],
     "remove_primary": [["プライマリー", "解除"]],
+    "show_change_prop_obj_list": [["プロパティ", "変更"]],
 }
