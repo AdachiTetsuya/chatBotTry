@@ -1,0 +1,25 @@
+{
+    "type": "bubble",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "button",
+          "action": {
+            "type": "message",
+            "label": "ソラを MyBuddy に登録",
+            "text": "ソラを MyBuddy に登録"
+          }
+        },
+        {
+          "type": "button",
+          "action": {
+            "type": "message",
+            "label": "ケイを MyBuddy に登録",
+            "text": "ケイを MyBuddy に登録"
+          }
+        }
+      ]
+    }
+  }

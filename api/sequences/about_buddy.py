@@ -1,4 +1,4 @@
-from api.bot_messages import create_button_template_message_list, create_text_message_list
+from api.bot_messages import create_button_list_message_list, create_text_message_list
 
 
 def show_MB_operation_list(user_poll_relations):
@@ -9,7 +9,10 @@ def show_MB_operation_list(user_poll_relations):
         else:
             choice_list.append("{}を MyBuddy に登録".format(user_poll.poll_name))
 
-    result = create_button_template_message_list(choice_list)
+    result = create_text_message_list("実行したい内容を選択してください。")
+    button_list = create_button_list_message_list(choice_list)
+    result.extend(button_list)
+
     return result
 
 

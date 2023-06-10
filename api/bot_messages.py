@@ -24,14 +24,17 @@ def create_sticker_message_list(*args):
         return message
 
 
-def create_button_template_message_list(choice_list):
-    actions_list = [
-        {"type": "message", "label": item, "text": "{}します".format(item)} for item in choice_list
+def create_button_list_message_list(choice_list):
+    contents_list = [
+        {
+            "type": "button",
+            "action": {"type": "message", "label": item, "text": "{}します".format(item)},
+        }
+        for item in choice_list
     ]
     message = {
-        "type": "template",
-        "altText": "This is a buttons template",
-        "template": {"type": "buttons", "text": "どれを実行しますか？", "actions": actions_list},
+        "type": "bubble",
+        "body": {"type": "box", "layout": "vertical", "contents": contents_list},
     }
     return [message]
 
