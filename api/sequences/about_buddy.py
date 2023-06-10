@@ -67,7 +67,9 @@ def register_primary(user_poll, user_poll_relations):
         else:
             if not user_poll.is_buddy:
                 return create_text_message_list(
-                    "{}はまだ MyBuddy に登録されていません。".format(user_poll.poll_name)
+                    "{}はまだ MyBuddy に登録されていません。MyBuddy に登録されている人だけが プライマリーに登録できます。".format(
+                        user_poll.poll_name
+                    )
                 )
             else:
                 user_poll.is_primary = True
