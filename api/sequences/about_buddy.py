@@ -65,9 +65,14 @@ def register_primary(user_poll, user_poll_relations):
         if len(buddy_poll_list) <= 1:
             return create_text_message_list("誰かとプライマリーになるためには、2人以上を MyBuddy に登録する必要があります。")
         else:
-            user_poll.is_primary = True
-            user_poll.save()
-            return create_text_message_list("{}を プライマリー に登録しました。".format(user_poll.poll_name))
+            if not user_poll.is_buddy:
+                return create_text_message_list(
+                    "{}はまだ MyBuddy に登録されていません。".format(user_poll.poll_name)
+                )
+            else:
+                user_poll.is_primary = True
+                user_poll.save()
+                return create_text_message_list("{}を プライマリー に登録しました。".format(user_poll.poll_name))
 
 
 def remove_primary(user_poll, user_poll_relations):
