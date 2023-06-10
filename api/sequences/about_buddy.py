@@ -1,4 +1,8 @@
+import logging
+
 from api.bot_messages import create_button_list_message_list, create_text_message_list
+
+logger = logging.getLogger("api")
 
 
 def show_MB_operation_list(user_poll_relations):
@@ -12,6 +16,8 @@ def show_MB_operation_list(user_poll_relations):
     result = create_text_message_list("実行したい内容を選択してください。")
     button_list = create_button_list_message_list(choice_list)
     result.extend(button_list)
+
+    logger.info(result)
 
     return result
 
