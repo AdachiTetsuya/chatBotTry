@@ -3,7 +3,7 @@ import logging
 from api.bot_messages import create_text_message_list
 from api.data.operation import OPERATION_DATA, PERSONAL_OPERATION_DATA
 from api.mecab_function import wakati_text
-from api.models import UserPollRelation
+from api.models import CustomUser, UserPollRelation
 from api.sequences.about_buddy import (
     register_MB,
     register_primary,
@@ -11,6 +11,7 @@ from api.sequences.about_buddy import (
     remove_primary,
     show_MB_operation_list,
 )
+from api.sequences.change_property import show_change_prop_obj_list
 from api.sequences.etc_func import show_temperature, sky_photo
 from api.sequences.response_message import everyone_response, single_response
 from api.utils import get_message_text, get_user_line_id
@@ -30,7 +31,8 @@ def receive_message_function(event_obj):
     """
 
     line_id = get_user_line_id(event_obj)
-    user_poll_relations = UserPollRelation.objects.filter(user__line_id=line_id)
+    user = CustomUser.objects.get(line_id=line_id)
+    user_poll_relations = UserPollRelation.objects.filter(user=user)
 
     sequence = judge_sequence_from_message(event_obj, user_poll_relations)
 
@@ -61,6 +63,9 @@ def receive_message_function(event_obj):
 
         elif operation == "remove_primary":
             return remove_primary(sequence["target"], user_poll_relations)
+
+        elif operation == "show_change_prop_obj_list":
+            return show_change_prop_obj_list(user_poll_relations)
 
     result = create_text_message_list("わからない")
     return result

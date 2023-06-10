@@ -3,6 +3,7 @@ OPERATION_DATA = {
     "sky_photo": ["空", "夜空", "雲"],
     "show_temperature": ["気温", "温度"],
     "show_MB_operation_list": [["MyBuddy", "編集"]],
+    "show_change_prop_obj_list": [["プロパティ", "変更"]],
 }
 
 PERSONAL_OPERATION_DATA = {
