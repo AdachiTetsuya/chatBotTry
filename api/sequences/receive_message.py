@@ -76,7 +76,7 @@ def judge_sequence_from_message(event_obj, user_poll_relations):
     # 名前が入ってる場合の処理
     for i, poll_name in enumerate(poll_name_list):
         if poll_name not in text_result:
-            break
+            continue
 
         for k, v_list in PERSONAL_OPERATION_DATA.items():
             if type(v_list[0]) is str:
