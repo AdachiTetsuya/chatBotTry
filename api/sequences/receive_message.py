@@ -1,10 +1,10 @@
 import logging
 
 from api.bot_messages import create_text_message_list
-from api.data.operation import OPERATION_DATA
+from api.data.operation import OPERATION_DATA, PERSONAL_OPERATION_DATA
 from api.mecab_function import wakati_text
 from api.models import UserPollRelation
-from api.sequences.about_buddy import show_MB_operation_list
+from api.sequences.about_buddy import register_MB, remove_MB, show_MB_operation_list
 from api.sequences.etc_func import show_temperature, sky_photo
 from api.sequences.response_message import everyone_response, single_response
 from api.utils import get_message_text, get_user_line_id
@@ -28,21 +28,27 @@ def receive_message_function(event_obj):
 
     sequence = judge_sequence_from_message(event_obj, user_poll_relations)
 
-    if sequence["operation"]:
-        if sequence["operation"] == "sky_photo":
+    if operation := sequence["operation"]:
+        if operation == "sky_photo":
             return sky_photo()
 
-        elif sequence["operation"] == "show_temperature":
+        elif operation == "show_temperature":
             return show_temperature()
 
-        elif sequence["operation"] == "everyone_response":
+        elif operation == "everyone_response":
             return everyone_response(user_poll_relations)
 
-        elif sequence["operation"] == "single_response":
+        elif operation == "single_response":
             return single_response(sequence["target"])
 
-        elif sequence["operation"] == "show_MB_operation_list":
+        elif operation == "show_MB_operation_list":
             return show_MB_operation_list(user_poll_relations)
+
+        elif operation == "register_MB":
+            return register_MB(sequence["target"])
+
+        elif operation == "remove_MB":
+            return remove_MB(sequence["target"])
 
     result = create_text_message_list("わからない")
     return result
@@ -61,19 +67,31 @@ def judge_sequence_from_message(event_obj, user_poll_relations):
             for v in v_list:
                 if v in text_result:
                     result["operation"] = k
-                    break
-            else:
-                continue
-            break
+                    return result
         else:
             if set(v_list[0]).issubset(text_result):
                 result["operation"] = k
-                break
+                return result
 
     # 名前が入ってる場合の処理
     for i, poll_name in enumerate(poll_name_list):
-        if poll_name in text_result:
-            result["operation"] = "single_response"
-            result["target"] = user_poll_relations[i]
+        if poll_name not in text_result:
+            return result
+
+        for k, v_list in PERSONAL_OPERATION_DATA.items():
+            if type(v_list[0]) is str:
+                for v in v_list:
+                    if v in text_result:
+                        result["operation"] = k
+                        result["target"] = user_poll_relations[i]
+                        return result
+            else:
+                if set(v_list[0]).issubset(text_result):
+                    result["target"] = user_poll_relations[i]
+                    result["operation"] = k
+                    return result
+
+        result["operation"] = "single_response"
+        result["target"] = user_poll_relations[i]
 
     return result
