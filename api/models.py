@@ -1,5 +1,9 @@
+import random
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+
+from api.constants import POLL_GENDER_LIST
 
 
 class CustomUser(models.Model):
@@ -48,16 +52,31 @@ class UserPollRelation(models.Model):
     poll_age = models.IntegerField(
         "ポールの年齢", default=20, validators=[MinValueValidator(0), MaxValueValidator(130)]
     )
+    poll_gender = models.IntegerField("ポールの性別", choices=POLL_GENDER_LIST, blank=True, null=True)
+
     is_buddy = models.BooleanField("バディかどうか", default=False)
     is_primary = models.BooleanField("プライマリー指定", default=False)
 
     def save(self, *args, **kwargs):
         if not self.poll_name:
             self.poll_name = self.smart_poll.default_name
+        if not self.poll_gender:
+            self.poll_gender = random.randint(1, 2)
         super(UserPollRelation, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "ユーザとポールの関係"
+
+
+class UserSequence(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="user_sequence")
+    is_change_user_name = models.BooleanField("ユーザの名前を変更中か", default=False)
+    is_change_poll_name = models.BooleanField("ポールの名前を変更中か", default=False)
+    is_change_poll_age = models.BooleanField("ポールの年齢を変更中か", default=False)
+    is_change_poll_gender = models.BooleanField("ポールの性別を変更中か", default=False)
+
+    class Meta:
+        verbose_name_plural = "ユーザの状態"
 
 
 class GreetingMessage(models.Model):
