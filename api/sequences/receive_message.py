@@ -11,7 +11,11 @@ from api.sequences.about_buddy import (
     remove_primary,
     show_MB_operation_list,
 )
-from api.sequences.change_property import show_change_prop_list, show_change_prop_obj_list
+from api.sequences.change_property import (
+    new_name_input_prompt,
+    show_change_prop_list,
+    show_change_prop_obj_list,
+)
 from api.sequences.etc_func import show_temperature, sky_photo
 from api.sequences.response_message import everyone_response, single_response
 from api.utils import get_message_text, get_user_line_id
@@ -69,6 +73,9 @@ def receive_message_function(event_obj):
 
         elif operation == "show_change_prop_list":
             return show_change_prop_list(sequence["target"])
+
+        elif operation == "new_name_input_prompt":
+            return new_name_input_prompt(user)
 
     result = create_text_message_list("わからない")
     return result

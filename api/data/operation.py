@@ -12,4 +12,5 @@ PERSONAL_OPERATION_DATA = {
     "register_primary": [["プライマリー", "登録"]],
     "remove_primary": [["プライマリー", "解除"]],
     "show_change_prop_list": [["プロパティ", "変更"]],
+    "new_name_input_prompt": [["名前", "変更"]],
 }

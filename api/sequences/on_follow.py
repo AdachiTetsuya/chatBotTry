@@ -25,7 +25,6 @@ def follow_event_function(line_message, event_obj):
     user_instance = save_user(user_info["displayName"], user_id)
 
     user_poll_relation_queryset = create_user_poll_relation(user_instance, user_id)
-    logger.info(user_poll_relation_queryset)
 
     greeting_message = get_greeting_message(user_info["displayName"])
     introduce_message = get_introduce_message(user_poll_relation_queryset)
