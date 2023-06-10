@@ -70,6 +70,13 @@ class UserPollRelation(models.Model):
 
 class UserSequence(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="user_sequence")
+    target = models.ForeignKey(
+        UserPollRelation,
+        on_delete=models.CASCADE,
+        related_name="relation_sequence",
+        blank=True,
+        null=True,
+    )
     is_change_user_name = models.BooleanField("ユーザの名前を変更中か", default=False)
     is_change_poll_name = models.BooleanField("ポールの名前を変更中か", default=False)
     is_change_poll_age = models.BooleanField("ポールの年齢を変更中か", default=False)

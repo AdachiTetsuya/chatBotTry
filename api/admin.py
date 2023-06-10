@@ -31,6 +31,8 @@ class UserPollRelationAdmin(admin.ModelAdmin):
 class UserSequenceAdmin(admin.ModelAdmin):
     list_display = [
         "id",
+        "user",
+        "target",
         "is_change_user_name",
         "is_change_poll_name",
         "is_change_poll_age",
