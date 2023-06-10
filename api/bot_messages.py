@@ -25,13 +25,26 @@ def create_sticker_message_list(*args):
 
 
 def create_button_list_message_list(choice_list):
-    contents_list = [
-        {
-            "type": "button",
-            "action": {"type": "message", "label": item, "text": "{}します".format(item)},
-        }
-        for item in choice_list
-    ]
+    """
+    Args
+        list(str(label))
+        list(tuple(label,text))
+    """
+    contents_list = []
+    for item in choice_list:
+        if type(item) is str:
+            content = {
+                "type": "button",
+                "action": {"type": "message", "label": item, "text": item},
+            }
+            contents_list.append(content)
+        else:
+            content = {
+                "type": "button",
+                "action": {"type": "message", "label": item[0], "text": item[1]},
+            }
+            contents_list.append(content)
+
     message = {
         "type": "flex",
         "altText": "flexMessageです",
