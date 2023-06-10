@@ -54,28 +54,26 @@ def judge_sequence_from_message(event_obj, user_poll_relations):
 
     poll_name_list = [item.poll_name for item in user_poll_relations]
 
-    operation = ""
-    target = ""
-    result = {"operation": operation, "target": target}
+    result = {"operation": "", "target": ""}
 
     for k, v_list in OPERATION_DATA.items():
         if type(v_list[0]) is str:
             for v in v_list:
                 if v in text_result:
-                    operation = k
+                    result["operation"] = k
                     break
             else:
                 continue
             break
         else:
             if set(v_list[0]).issubset(text_result):
-                operation = k
+                result["operation"] = k
                 break
 
     # 名前が入ってる場合の処理
     for i, poll_name in enumerate(poll_name_list):
         if poll_name in text_result:
-            operation = "single_response"
-            target = user_poll_relations[i]
+            result["operation"] = "single_response"
+            result["target"] = user_poll_relations[i]
 
     return result
