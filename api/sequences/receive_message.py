@@ -75,7 +75,7 @@ def receive_message_function(event_obj):
             return show_change_prop_list(sequence["target"])
 
         elif operation == "new_name_input_prompt":
-            return new_name_input_prompt(user)
+            return new_name_input_prompt(sequence["target"], user)
 
     result = create_text_message_list("わからない")
     return result

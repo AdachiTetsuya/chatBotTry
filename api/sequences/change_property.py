@@ -28,9 +28,11 @@ def show_change_prop_list(target):
     return result
 
 
-def new_name_input_prompt(user: CustomUser):
+def new_name_input_prompt(target: UserPollRelation | CustomUser, user: CustomUser):
     user_sequence, created = UserSequence.objects.get_or_create(user=user)
     user_sequence.is_change_poll_name = True
+    if isinstance(target, UserPollRelation):
+        user_sequence.target = target
     user_sequence.save()
 
     result = create_text_message_list("新しい名前を入力してください。")
