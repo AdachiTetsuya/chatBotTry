@@ -23,9 +23,8 @@ def show_MB_operation_list(user_poll_relations):
         else:
             choice_list.append("{}を MyBuddy に登録".format(user_poll.poll_name))
 
-    choice_list.sort()
     result = create_text_message_list("実行したい内容を選択してください。")
-    button_list = create_button_list_message_list(choice_list)
+    button_list = create_button_list_message_list(sorted(choice_list, reverse=True))
     result.extend(button_list)
 
     return result
