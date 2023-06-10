@@ -56,6 +56,7 @@ def judge_sequence_from_message(event_obj, user_poll_relations):
 
     operation = ""
     target = ""
+    result = {"operation": operation, "target": target}
 
     for k, v_list in OPERATION_DATA.items():
         if type(v_list[0]) is str:
@@ -77,5 +78,4 @@ def judge_sequence_from_message(event_obj, user_poll_relations):
             operation = "single_response"
             target = user_poll_relations[i]
 
-    result = {"operation": operation, "target": target}
     return result
