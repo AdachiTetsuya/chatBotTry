@@ -10,8 +10,10 @@ def show_all_property(user_poll_relations: list[UserPollRelation], user: CustomU
             f"年齢: {poll.poll_age}",
             f"性別: {poll.poll_gender}",
             f"バディか: {poll.is_buddy}",
-            f"プライマリーか: {poll.is_primary}",
         ]
+        if poll.is_buddy:
+            prop_list.append(f"プライマリーか: {poll.is_primary}")
+
         text = "\n".join(prop_list)
         text_all += text
         text_all += "\n\n"
