@@ -2,6 +2,7 @@ OPERATION_DATA = {
     "everyone_response": ["みんな", "皆"],
     "sky_photo": ["空", "夜空", "雲"],
     "show_temperature": ["気温", "温度"],
+    "show_MB_list": [["MyBuddy", "一覧"]],
     "show_MB_operation_list": [["MyBuddy", "編集"]],
     "show_all_property": [["プロパティ", "一覧"]],
     "show_change_prop_obj_list": [["プロパティ", "変更"]],

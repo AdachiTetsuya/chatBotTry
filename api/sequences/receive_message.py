@@ -9,6 +9,7 @@ from api.sequences.about_buddy import (
     register_primary,
     remove_MB,
     remove_primary,
+    show_MB_list,
     show_MB_operation_list,
 )
 from api.sequences.change_property import (
@@ -53,6 +54,9 @@ def receive_message_function(event_obj):
 
         elif operation == "single_response":
             return single_response(sequence["target"])
+
+        elif operation == "show_MB_list":
+            return show_MB_list(user_poll_relations)
 
         elif operation == "show_MB_operation_list":
             return show_MB_operation_list(user_poll_relations)

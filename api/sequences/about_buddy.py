@@ -1,9 +1,29 @@
 import logging
 
 from api.bot_messages import create_button_list_message_list, create_text_message_list
+from api.models import UserPollRelation
 from api.utils import get_buddy_not_primary_poll, get_primary_poll
 
 logger = logging.getLogger("api")
+
+
+def show_MB_list(user_poll_relations: list[UserPollRelation]):
+    text_list = []
+    message = ""
+    for poll in user_poll_relations:
+        if poll.is_buddy:
+            text = poll.poll_name
+            if poll.is_primary:
+                text += " (プライマリー)"
+            text_list.append(text)
+
+    if text_list:
+        text_list.insert(0, "【MyBuddy】")
+        message = "\n".join(text_list)
+    else:
+        message = "まだ MyBuddy が登録されていません。"
+    result = create_text_message_list(message)
+    return result
 
 
 def show_MB_operation_list(user_poll_relations):
