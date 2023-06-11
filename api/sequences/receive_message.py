@@ -13,6 +13,7 @@ from api.sequences.about_buddy import (
 )
 from api.sequences.change_property import (
     new_name_input_prompt,
+    show_all_property,
     show_change_prop_list,
     show_change_prop_obj_list,
 )
@@ -67,6 +68,9 @@ def receive_message_function(event_obj):
 
         elif operation == "remove_primary":
             return remove_primary(sequence["target"], user_poll_relations)
+
+        elif operation == "show_all_property":
+            return show_all_property(user_poll_relations, user)
 
         elif operation == "show_change_prop_obj_list":
             return show_change_prop_obj_list(user_poll_relations)

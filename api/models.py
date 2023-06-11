@@ -3,7 +3,7 @@ import random
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-from api.constants import POLL_GENDER_LIST
+from api.data.constants import POLL_GENDER_LIST
 
 
 class CustomUser(models.Model):
