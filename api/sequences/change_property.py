@@ -14,6 +14,7 @@ def show_all_property(user_poll_relations: list[UserPollRelation], user: CustomU
         ]
         text = "\n".join(prop_list)
         text_all += text
+        text_all += "\n\n"
     user_prop_list = ["あなた", f"名前: {user.username}"]
     text_all += "\n".join(user_prop_list)
 
