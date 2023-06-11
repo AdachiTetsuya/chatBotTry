@@ -2,9 +2,8 @@ from .models import GreetingMessage, UnknownMessage
 
 
 def create_text_message_list(*args):
-    if args:
-        message = [{"type": "text", "text": msg} for msg in args]
-        return message
+    message = [{"type": "text", "text": msg} for msg in args]
+    return message
 
 
 def create_image_message_list(*args):
@@ -52,6 +51,29 @@ def create_button_list_message_list(choice_list):
             "type": "bubble",
             "body": {"type": "box", "layout": "vertical", "contents": contents_list},
         },
+    }
+    return [message]
+
+
+def create_quick_reply_text_list(text: str, choice_list):
+    item_list = []
+    for choice in choice_list:
+        if type(choice) is str:
+            content = {
+                "type": "action",
+                "action": {"type": "message", "label": choice, "text": choice},
+            }
+            item_list.append(content)
+        else:
+            content = {
+                "type": "action",
+                "action": {"type": "message", "label": choice[0], "text": choice[1]},
+            }
+            item_list.append(content)
+    message = {
+        "type": "text",
+        "text": text,
+        "quickReply": {"items": item_list},
     }
     return [message]
 

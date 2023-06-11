@@ -36,7 +36,7 @@ def judge_comment_from_temperature(temperature):
         result = "あったかいっすね。"
     elif temperature >= 30 and temperature < 40:
         result = "暑いっすね。"
-    elif temperature <= 40:
+    elif temperature >= 40:
         result = "めっちゃ暑いっすね。"
 
     return result
