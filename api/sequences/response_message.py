@@ -1,4 +1,4 @@
-from api.bot_messages import create_text_message_list
+from api.bot_messages import create_quick_reply_text_list, create_text_message_list
 from api.models import ResponseMessage
 
 
@@ -11,7 +11,10 @@ def everyone_response(user_poll_relations):
         for (name, message) in zip(poll_name_list, message_list)
     ]
     formatted_message = "\n".join(message_list)
-    result = create_text_message_list(formatted_message)
+
+    choice_list = [(poll_name, f"{poll_name}〜") for poll_name in poll_name_list]
+
+    result = create_quick_reply_text_list(formatted_message, choice_list)
     return result
 
 
