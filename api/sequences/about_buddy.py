@@ -1,6 +1,10 @@
 import logging
 
-from api.bot_messages import create_button_list_message_list, create_text_message_list
+from api.bot_messages import (
+    create_button_list_message_list,
+    create_quick_reply_text_list,
+    create_text_message_list,
+)
 from api.models import UserPollRelation
 from api.utils import get_buddy_not_primary_poll, get_primary_poll
 
@@ -23,6 +27,9 @@ def show_MB_list(user_poll_relations: list[UserPollRelation]):
     else:
         message = "まだ MyBuddy が登録されていません。"
     result = create_text_message_list(message)
+
+    choice_list = [("はい", "MyBuddy を編集します"), ("いいえ", "いいえ")]
+    result.extend(create_quick_reply_text_list("MyBuddy を編集しますか？", choice_list))
     return result
 
 
