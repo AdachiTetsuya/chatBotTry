@@ -1,4 +1,8 @@
-from api.bot_messages import create_button_list_message_list, create_text_message_list
+from api.bot_messages import (
+    create_button_list_message_list,
+    create_quick_reply_text_list,
+    create_text_message_list,
+)
 from api.models import CustomUser, UserPollRelation, UserSequence
 
 
@@ -7,7 +11,7 @@ def show_all_property(user_poll_relations: list[UserPollRelation], user: CustomU
     for poll in user_poll_relations:
         prop_list = [
             poll.poll_name,
-            f"年齢: {poll.poll_age}",
+            f"年齢: {poll.poll_age}歳",
             f"性別: {poll.poll_gender}",
             f"バディか: {poll.is_buddy}",
         ]
@@ -20,7 +24,10 @@ def show_all_property(user_poll_relations: list[UserPollRelation], user: CustomU
     user_prop_list = ["あなた", f"名前: {user.username}"]
     text_all += "\n".join(user_prop_list)
 
+    choice_list = [("はい", "プロパティを変更します"), ("いいえ", "いいえ")]
     result = create_text_message_list(text_all)
+    result.extend(create_quick_reply_text_list("プロパティを変更しますか？", choice_list))
+
     return result
 
 
