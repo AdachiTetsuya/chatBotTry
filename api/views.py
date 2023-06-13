@@ -38,7 +38,7 @@ class LineBotApiView(APIView):
 
             if manage_input_result := manage_property_input(event_obj, user, user_poll_relations):
                 line_message.reply(reply_token, manage_input_result)
-                return
+                return Response(status=status.HTTP_200_OK)
 
             message_type = get_message_type(event_obj)
             if message_type == "text":
