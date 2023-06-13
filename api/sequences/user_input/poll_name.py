@@ -24,5 +24,6 @@ def change_poll_name(
     poll.save()
 
     user_sequence.is_change_poll_name = False
+    user_sequence.save()
 
     return create_text_message_list(f"{pre_name}の名前を{new_name}に変更しました")
