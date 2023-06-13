@@ -1,10 +1,18 @@
 import logging
 
-from api.models import SmartPoll, UserPollRelation
+from api.models import CustomUser, SmartPoll, UserPollRelation
+from api.utils import get_user_line_id
 
 from .serializers import CustomUserSerializer
 
 logger = logging.getLogger("api")
+
+
+def get_related_instance(event_obj):
+    line_id = get_user_line_id(event_obj)
+    user = CustomUser.objects.get(line_id=line_id)
+    user_poll_relations = UserPollRelation.objects.filter(user=user)
+    return user, user_poll_relations
 
 
 def save_user(username, line_id):

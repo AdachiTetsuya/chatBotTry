@@ -20,25 +20,23 @@ from api.sequences.change_property import (
 )
 from api.sequences.etc_func import show_temperature, sky_photo
 from api.sequences.response_message import everyone_response, single_response
-from api.utils import get_message_text, get_user_line_id
+from api.utils import get_message_text
 
 logger = logging.getLogger("api")
 
 
-def receive_message_function(event_obj):
+def receive_message_function(event_obj, user: CustomUser, user_poll_relations: UserPollRelation):
     """
     テキストメッセージを受け取って、適切な送信メッセージを返す。
 
     Args:
         event_obj (dict): Messaging API の イベントオブジェクト
+        user (CustomUser): CustomUser インスタンス
+        user_poll_relations (UserPollRelation): UserPollRelation インスタンス
 
     Returns:
         list[dict[str, str]] : reply メソッド用にフォーマットした送信メッセージ
     """
-
-    line_id = get_user_line_id(event_obj)
-    user = CustomUser.objects.get(line_id=line_id)
-    user_poll_relations = UserPollRelation.objects.filter(user=user)
 
     sequence = judge_sequence_from_message(event_obj, user_poll_relations, user)
 

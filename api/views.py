@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from api.about_user import get_related_instance
 from api.data.sticker_data import get_random_sticker
 from api.sequences.on_follow import follow_event_function
 from api.sequences.receive_message import receive_message_function
@@ -32,11 +33,14 @@ class LineBotApiView(APIView):
 
         if event_type == "message":
             reply_token = get_reply_token(event_obj)
+            user, user_poll_relations = get_related_instance(event_obj)
+
+            # manage_property_input(event_obj)
 
             message_type = get_message_type(event_obj)
 
             if message_type == "text":
-                message = receive_message_function(event_obj)
+                message = receive_message_function(event_obj, user, user_poll_relations)
                 line_message.reply(reply_token, message)
 
             elif message_type == "sticker":
