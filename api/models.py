@@ -82,6 +82,17 @@ class UserSequence(models.Model):
     is_change_poll_age = models.BooleanField("ポールの年齢を変更中か", default=False)
     is_change_poll_gender = models.BooleanField("ポールの性別を変更中か", default=False)
 
+    @property
+    def is_inputting(self):
+        return any(
+            [
+                self.is_change_user_name,
+                self.is_change_poll_name,
+                self.is_change_poll_age,
+                self.is_change_poll_gender,
+            ]
+        )
+
     class Meta:
         verbose_name_plural = "ユーザの状態"
 

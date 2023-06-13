@@ -1,6 +1,6 @@
 import logging
 
-from api.models import CustomUser, SmartPoll, UserPollRelation
+from api.models import CustomUser, SmartPoll, UserPollRelation, UserSequence
 from api.utils import get_user_line_id
 
 from .serializers import CustomUserSerializer
@@ -41,3 +41,7 @@ def create_user_poll_relation(user, user_line_id=None):
         return objects
     elif user_line_id:
         return UserPollRelation.objects.filter(user__line_id=user_line_id)
+
+
+def create_user_sequence(user):
+    UserSequence.objects.get_or_create(user=user)

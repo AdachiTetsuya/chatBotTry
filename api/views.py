@@ -10,6 +10,7 @@ from api.about_user import get_related_instance
 from api.data.sticker_data import get_random_sticker
 from api.sequences.on_follow import follow_event_function
 from api.sequences.receive_message import receive_message_function
+from api.sequences.user_input.manage_input import manage_property_input
 
 from .bot_base import LineBotMSG
 from .bot_messages import (
@@ -35,10 +36,11 @@ class LineBotApiView(APIView):
             reply_token = get_reply_token(event_obj)
             user, user_poll_relations = get_related_instance(event_obj)
 
-            # manage_property_input(event_obj)
+            if manage_input_result := manage_property_input(event_obj, user, user_poll_relations):
+                line_message.reply(reply_token, manage_input_result)
+                return
 
             message_type = get_message_type(event_obj)
-
             if message_type == "text":
                 message = receive_message_function(event_obj, user, user_poll_relations)
                 line_message.reply(reply_token, message)
