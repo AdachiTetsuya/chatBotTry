@@ -1,8 +1,6 @@
 import logging
 
 from api.bot_messages import create_text_message_list
-from api.data.operation import OPERATION_DATA, PERSONAL_OPERATION_DATA
-from api.mecab_function import wakati_text
 from api.models import CustomUser, UserPollRelation
 from api.sequences.about_buddy import (
     register_MB,
@@ -19,8 +17,8 @@ from api.sequences.change_property import (
     show_change_prop_obj_list,
 )
 from api.sequences.etc_func import show_temperature, sky_photo
+from api.sequences.judge_sequence import judge_sequence_from_message
 from api.sequences.response_message import everyone_response, single_response
-from api.utils import get_message_text
 
 logger = logging.getLogger("api")
 
@@ -84,55 +82,4 @@ def receive_message_function(event_obj, user: CustomUser, user_poll_relations: U
             return new_name_input_prompt(sequence["target"], user)
 
     result = create_text_message_list("わからない")
-    return result
-
-
-def judge_sequence_from_message(event_obj, user_poll_relations, user):
-    message = get_message_text(event_obj)
-    text_result = wakati_text(message)
-
-    poll_name_list = [item.poll_name for item in user_poll_relations]
-
-    result = {"operation": "", "target": ""}
-
-    # 名前が入ってる場合の処理
-    for i, poll_name in enumerate(poll_name_list):
-        if poll_name not in text_result:
-            continue
-
-        for k, v_list in PERSONAL_OPERATION_DATA.items():
-            if type(v_list[0]) is str:
-                for v in v_list:
-                    if v in text_result:
-                        result["operation"] = k
-                        result["target"] = user_poll_relations[i]
-                        return result
-            else:
-                if set(v_list[0]).issubset(text_result):
-                    result["operation"] = k
-                    result["target"] = user_poll_relations[i]
-                    return result
-
-        result["operation"] = "single_response"
-        result["target"] = user_poll_relations[i]
-
-    # 「私」という言葉が入ってる場合の処理
-    if "私" in text_result:
-        for k, v_list in PERSONAL_OPERATION_DATA.items():
-            if set(v_list[0]).issubset(text_result):
-                result["operation"] = k
-                result["target"] = user
-                return result
-
-    for k, v_list in OPERATION_DATA.items():
-        if type(v_list[0]) is str:
-            for v in v_list:
-                if v in text_result:
-                    result["operation"] = k
-                    return result
-        else:
-            if set(v_list[0]).issubset(text_result):
-                result["operation"] = k
-                return result
-
     return result

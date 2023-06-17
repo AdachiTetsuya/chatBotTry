@@ -9,6 +9,7 @@ from api.data.constants import POLL_GENDER_LIST
 class CustomUser(models.Model):
     username = models.CharField("ユーザー名", max_length=50, blank=True, null=True)
     line_id = models.CharField("LINE ID", max_length=50, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.username
@@ -57,6 +58,13 @@ class UserPollRelation(models.Model):
     is_buddy = models.BooleanField("バディかどうか", default=False)
     is_primary = models.BooleanField("プライマリー指定", default=False)
 
+    relationship_level = models.IntegerField(
+        "仲の良さ", default=3, validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
+
+    def increment_relationship_level(self, *args, **kwargs):
+        self.relationship_level += 1
+
     def save(self, *args, **kwargs):
         if not self.poll_name:
             self.poll_name = self.smart_poll.default_name
@@ -66,6 +74,28 @@ class UserPollRelation(models.Model):
 
     class Meta:
         verbose_name_plural = "ユーザとポールの関係"
+
+
+class UserPollCommentCount(models.Model):
+    user_poll_relation = models.OneToOneField(
+        UserPollRelation, on_delete=models.CASCADE, related_name="comment_count"
+    )
+    total = models.IntegerField("累計", default=0)
+    count_in_level = models.IntegerField("親密度変化後の合計値", default=0)
+    continuous_day_in_level = models.IntegerField("連続話しかけ日数", default=0)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def increment_comment_total(self, *args, **kwargs):
+        self.total += 1
+
+    def increment_comment_count_in_level(self, *args, **kwargs):
+        self.count_in_level += 1
+
+    def increment_continuous_day_in_level(self, *args, **kwargs):
+        self.continuous_day_in_level += 1
+
+    class Meta:
+        verbose_name_plural = "ユーザが特定のポールを呼びかけた回数"
 
 
 class UserSequence(models.Model):

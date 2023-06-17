@@ -7,6 +7,7 @@ REPLY_ENDPOINT_URL = "https://api.line.me/v2/bot/message/reply"
 USER_INFO_URL = "https://api.line.me/v2/bot/profile/"
 
 PUSH_MESSAGE_URL = "https://api.line.me/v2/bot/message/push"
+MULTI_CAST_MESSAGE_URL = "https://api.line.me/v2/bot/message/multicast"
 BROAD_CAST_MESSAGE_URL = "https://api.line.me/v2/bot/message/broadcast"
 
 LINE_ACCESS_TOKEN = os.getenv("LINE_ACCESS_TOKEN", "")
@@ -63,6 +64,18 @@ class LineBotMSG:
         """
         body = {"to": user_line_id, "messages": messages}
         requests.post(PUSH_MESSAGE_URL, data=json.dumps(body), headers=HEADER)
+
+    def multi_cast_message(self, user_line_ids, messages):
+        """マルチキャストメッセージ送信用メソッド
+
+        LINE の マルチキャストメッセージ送信用の API を叩く
+
+        Args:
+            user_line_ids (list(str)): 送信先の複数のユーザのラインID
+            messages (list[dict[str, str]]): 返信するメッセージ内容
+        """
+        body = {"to": user_line_ids, "messages": messages}
+        requests.post(MULTI_CAST_MESSAGE_URL, data=json.dumps(body), headers=HEADER)
 
     def broad_cast_message(self, messages):
         """ブロードキャストメッセージ送信用メソッド

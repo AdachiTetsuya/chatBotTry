@@ -7,6 +7,7 @@ from .models import (
     ResponseMessage,
     SmartPoll,
     UnknownMessage,
+    UserPollCommentCount,
     UserPollRelation,
     UserSequence,
 )
@@ -25,6 +26,11 @@ class SmartPollAdmin(admin.ModelAdmin):
 @admin.register(UserPollRelation)
 class UserPollRelationAdmin(admin.ModelAdmin):
     list_display = ["id", "user", "smart_poll", "poll_name", "poll_age"]
+
+
+@admin.register(UserPollCommentCount)
+class UserPollCommentCountAdmin(admin.ModelAdmin):
+    list_display = ["id", "user_poll_relation", "total", "count_in_level", "updated_at"]
 
 
 @admin.register(UserSequence)
