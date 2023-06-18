@@ -141,7 +141,7 @@ class ResponseMessage(models.Model):
     text = models.CharField(max_length=200)
     relationship_level_min = models.IntegerField("仲の良さの最小値", default=1)
     relationship_level_max = models.IntegerField("仲の良さの最大値", default=5)
-    poll_gender = models.IntegerField("ポールの性別", choices=POLL_GENDER_LIST, blank=True, null=True)
+    poll_gender = models.IntegerField("ポールの性別", choices=POLL_GENDER_LIST, default=3)
     poll_age_min = models.IntegerField("ポールの年齢の最小値", default=0)
     poll_age_max = models.IntegerField("ポールの年齢の最大値", default=130)
 
