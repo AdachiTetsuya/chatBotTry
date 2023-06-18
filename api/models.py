@@ -72,6 +72,9 @@ class UserPollRelation(models.Model):
             self.poll_gender = random.randint(1, 2)
         super(UserPollRelation, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return f"{self.user.username}と{self.poll_name}の関係"
+
     class Meta:
         verbose_name_plural = "ユーザとポールの関係"
 
