@@ -64,6 +64,8 @@ def new_name_input_prompt(target: UserPollRelation | CustomUser, user: CustomUse
     user_sequence.is_change_name = True
     if isinstance(target, UserPollRelation):
         user_sequence.target = target
+    else:
+        user_sequence.target = None
     user_sequence.save()
     result = create_quick_reply_text_list("新しい名前を入力してください。", [("キャンセル", "中断します")])
     return result
