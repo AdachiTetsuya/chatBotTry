@@ -2,6 +2,20 @@ from api.bot_messages import create_quick_reply_text_list, create_text_message_l
 from api.models import CustomUser, UserPollRelation, UserSequence
 
 
+def get_pre_name(target: UserPollRelation | CustomUser):
+    if isinstance(target, UserPollRelation):
+        return target.poll_name
+    return "あなた"
+
+
+def save_name_func(target: UserPollRelation | CustomUser, new_name):
+    if isinstance(target, UserPollRelation):
+        target.poll_name = new_name
+    else:
+        target.username = new_name
+    target.save()
+
+
 def validate_input(message, name_list):
     error_msg = ""
     if len(message) > 30:
@@ -13,7 +27,7 @@ def validate_input(message, name_list):
     return error_msg
 
 
-def change_poll_name(
+def change_name(
     message,
     user: CustomUser,
     user_sequence: UserSequence,
@@ -27,13 +41,12 @@ def change_poll_name(
         result.extend(create_quick_reply_text_list("新しい名前を入力してください。", [("キャンセル", "中断します")]))
         return result
 
-    poll: UserPollRelation = user_sequence.target
-    pre_name = poll.poll_name
+    target: UserPollRelation | CustomUser = user_sequence.target
+    pre_name = get_pre_name(target)
     new_name = message
-    poll.poll_name = new_name
-    poll.save()
+    save_name_func(target, new_name)
 
-    user_sequence.is_change_poll_name = False
+    user_sequence.is_change_name = False
     user_sequence.save()
 
-    return create_text_message_list(f"{pre_name}の名前を{new_name}に変更しました")
+    return create_text_message_list(f"{pre_name} の名前を {new_name} に変更しました")

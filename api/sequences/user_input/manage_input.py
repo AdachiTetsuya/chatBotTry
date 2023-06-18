@@ -4,15 +4,15 @@ from api.utils import get_message_text, get_message_type
 
 from .poll_age import change_poll_age
 from .poll_gender import change_poll_gender
-from .poll_name import change_poll_name
+from .poll_name import change_name
 
 
 def cancel_property_change(user: CustomUser):
     """キャンセル時の処理"""
     user_sequence = UserSequence.objects.get(user=user)
-    user_sequence.is_change_user_name = (
-        user_sequence.is_change_poll_name
-    ) = user_sequence.is_change_poll_age = user_sequence.is_change_poll_gender = False
+    user_sequence.is_change_name = (
+        user_sequence.is_change_poll_age
+    ) = user_sequence.is_change_poll_gender = False
     user_sequence.save()
 
     result = create_text_message_list("中断しました")
@@ -34,8 +34,8 @@ def manage_property_input(event_obj, user, user_poll_relations):
     if message == "中断します":
         return cancel_property_change(user)
 
-    if user_sequence.is_change_poll_name:
-        return change_poll_name(message, user, user_sequence, user_poll_relations)
+    if user_sequence.is_change_name:
+        return change_name(message, user, user_sequence, user_poll_relations)
 
     if user_sequence.is_change_poll_age:
         return change_poll_age(message, user_sequence)

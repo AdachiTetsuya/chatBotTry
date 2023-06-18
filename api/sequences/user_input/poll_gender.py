@@ -36,4 +36,4 @@ def change_poll_gender(
     user_sequence.is_change_poll_gender = False
     user_sequence.save()
 
-    return create_text_message_list(f"{poll.poll_name} の性別を {new_gender}に変更しました")
+    return create_text_message_list(f"{poll.poll_name} の性別を {new_gender} に変更しました")

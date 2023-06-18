@@ -39,8 +39,7 @@ class UserSequenceAdmin(admin.ModelAdmin):
         "id",
         "user",
         "target",
-        "is_change_user_name",
-        "is_change_poll_name",
+        "is_change_name",
         "is_change_poll_age",
         "is_change_poll_gender",
     ]
