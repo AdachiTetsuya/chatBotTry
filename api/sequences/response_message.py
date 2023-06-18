@@ -19,10 +19,13 @@ def everyone_response(user_poll_relations):
 
 
 def single_response(user_poll_relation: UserPollRelation):
-    relationship_level = user_poll_relation.relationship_level
+    # relationship_level = user_poll_relation.relationship_level
+    poll_age = user_poll_relation.poll_age
 
     message = (
-        ResponseMessage.objects.filter(relationship_level=relationship_level).order_by("?").first()
+        ResponseMessage.objects.filter(poll_age_min__lte=poll_age, poll_age_max__gte=poll_age)
+        .order_by("?")
+        .first()
     )
     formatted_message = "{}: 「{}」".format(user_poll_relation.poll_name, message.text)
     result = create_text_message_list(formatted_message)
