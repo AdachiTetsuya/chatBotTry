@@ -41,7 +41,10 @@ def change_name(
         result.extend(create_quick_reply_text_list("新しい名前を入力してください。", [("キャンセル", "中断します")]))
         return result
 
-    target: UserPollRelation | CustomUser = user_sequence.target
+    target: UserPollRelation | None = user_sequence.target
+    if not target:
+        target = user
+
     pre_name = get_pre_name(target)
     new_name = message
     save_name_func(target, new_name)
