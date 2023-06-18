@@ -83,5 +83,6 @@ def new_gender_input_prompt(target: UserPollRelation, user: CustomUser):
     user_sequence.is_change_poll_gender = True
     user_sequence.target = target
     user_sequence.save()
-    result = create_quick_reply_button_list(POLL_GENDER_LIST, [("キャンセル", "中断します")])
+    result = create_text_message_list("新しい性別を選択してください")
+    result.extend(create_quick_reply_button_list(POLL_GENDER_LIST, [("キャンセル", "中断します")]))
     return result
