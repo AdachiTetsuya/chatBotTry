@@ -1,8 +1,10 @@
-POLL_GENDER_LIST = [
+POLL_GENDER_TUPLE_LIST = [
     (1, "男性"),
     (2, "女性"),
     (3, "その他"),
 ]
+
+POLL_GENDER_LIST = ["男性", "女性", "その他"]
 
 POLL_GENERATION_LIST = [
     (1, "乳児期"),  # 0 ~ 2

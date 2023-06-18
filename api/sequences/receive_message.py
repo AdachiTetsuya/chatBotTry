@@ -12,6 +12,7 @@ from api.sequences.about_buddy import (
 )
 from api.sequences.change_property import (
     new_age_input_prompt,
+    new_gender_input_prompt,
     new_name_input_prompt,
     show_all_property,
     show_change_prop_list,
@@ -76,6 +77,8 @@ def receive_message_function(event_obj, user: CustomUser, user_poll_relations: U
             return new_name_input_prompt(sequence["target"], user)
         elif operation == "new_age_input_prompt":
             return new_age_input_prompt(sequence["target"], user)
+        elif operation == "new_gender_input_prompt":
+            return new_gender_input_prompt(sequence["target"], user)
 
     result = create_text_message_list("わからない")
     return result

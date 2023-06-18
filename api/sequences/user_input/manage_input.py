@@ -3,6 +3,7 @@ from api.models import CustomUser, UserSequence
 from api.utils import get_message_text, get_message_type
 
 from .poll_age import change_poll_age
+from .poll_gender import change_poll_gender
 from .poll_name import change_poll_name
 
 
@@ -38,3 +39,6 @@ def manage_property_input(event_obj, user, user_poll_relations):
 
     if user_sequence.is_change_poll_age:
         return change_poll_age(message, user_sequence)
+
+    if user_sequence.is_change_poll_gender:
+        return change_poll_gender(message, user_sequence)

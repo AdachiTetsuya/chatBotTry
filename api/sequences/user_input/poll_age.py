@@ -41,4 +41,4 @@ def change_poll_age(
     user_sequence.is_change_poll_age = False
     user_sequence.save()
 
-    return create_text_message_list(f"{poll.poll_name} の年齢を {new_age}に変更しました")
+    return create_text_message_list(f"{poll.poll_name} の年齢を {new_age}歳に変更しました")

@@ -1,8 +1,10 @@
 from api.bot_messages import (
     create_button_list_message_list,
+    create_quick_reply_button_list,
     create_quick_reply_text_list,
     create_text_message_list,
 )
+from api.data.constants import POLL_GENDER_LIST
 from api.models import CustomUser, UserPollRelation, UserSequence
 
 
@@ -73,4 +75,13 @@ def new_age_input_prompt(target: UserPollRelation, user: CustomUser):
     user_sequence.target = target
     user_sequence.save()
     result = create_quick_reply_text_list("新しい年齢を入力してください。", [("キャンセル", "中断します")])
+    return result
+
+
+def new_gender_input_prompt(target: UserPollRelation, user: CustomUser):
+    user_sequence = UserSequence.objects.get(user=user)
+    user_sequence.is_change_poll_gender = True
+    user_sequence.target = target
+    user_sequence.save()
+    result = create_quick_reply_button_list(POLL_GENDER_LIST, [("キャンセル", "中断します")])
     return result

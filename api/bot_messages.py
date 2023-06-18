@@ -78,6 +78,49 @@ def create_quick_reply_text_list(text: str, choice_list):
     return [message]
 
 
+def create_quick_reply_button_list(choice_list, quick_list):
+    contents_list = []
+    for item in choice_list:
+        if type(item) is str:
+            content = {
+                "type": "button",
+                "action": {"type": "message", "label": item, "text": item},
+            }
+            contents_list.append(content)
+        else:
+            content = {
+                "type": "button",
+                "action": {"type": "message", "label": item[0], "text": item[1]},
+            }
+            contents_list.append(content)
+
+    item_list = []
+    for choice in quick_list:
+        if type(choice) is str:
+            content = {
+                "type": "action",
+                "action": {"type": "message", "label": choice, "text": choice},
+            }
+            item_list.append(content)
+        else:
+            content = {
+                "type": "action",
+                "action": {"type": "message", "label": choice[0], "text": choice[1]},
+            }
+            item_list.append(content)
+
+    message = {
+        "type": "flex",
+        "altText": "flexMessageです",
+        "contents": {
+            "type": "bubble",
+            "body": {"type": "box", "layout": "vertical", "contents": contents_list},
+        },
+        "quickReply": {"items": item_list},
+    }
+    return [message]
+
+
 def get_greeting_message(displayName):
     message = GreetingMessage.objects.order_by("?").first()
     text = message.text
