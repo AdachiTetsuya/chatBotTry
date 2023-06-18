@@ -37,4 +37,4 @@ def manage_property_input(event_obj, user, user_poll_relations):
         return change_poll_name(message, user, user_sequence, user_poll_relations)
 
     if user_sequence.is_change_poll_age:
-        return change_poll_age(message, user, user_sequence, user_poll_relations)
+        return change_poll_age(message, user_sequence)
