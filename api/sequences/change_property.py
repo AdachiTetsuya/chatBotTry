@@ -63,6 +63,16 @@ def new_name_input_prompt(target: UserPollRelation | CustomUser, user: CustomUse
     if isinstance(target, UserPollRelation):
         user_sequence.target = target
     user_sequence.save()
+    result = create_quick_reply_text_list("新しい名前を入力してください。", [("キャンセル", "中断します")])
+    return result
 
-    result = create_text_message_list("新しい名前を入力してください。")
+
+def cancel_property_change(user: CustomUser):
+    user_sequence = UserSequence.objects.get(user=user)
+    user_sequence.is_change_user_name = (
+        user_sequence.is_change_poll_name
+    ) = user_sequence.is_change_poll_age = user_sequence.is_change_poll_gender = False
+    user_sequence.save()
+
+    result = create_text_message_list("中断しました")
     return result

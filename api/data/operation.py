@@ -6,6 +6,7 @@ OPERATION_DATA = {
     "show_MB_operation_list": [["MyBuddy", "編集"]],
     "show_all_property": [["プロパティ", "一覧"]],
     "show_change_prop_obj_list": [["プロパティ", "変更"]],
+    "cancel_property_change": ["中断"],
 }
 
 PERSONAL_OPERATION_DATA = {

@@ -11,6 +11,7 @@ from api.sequences.about_buddy import (
     show_MB_operation_list,
 )
 from api.sequences.change_property import (
+    cancel_property_change,
     new_name_input_prompt,
     show_all_property,
     show_change_prop_list,
@@ -47,39 +48,33 @@ def receive_message_function(event_obj, user: CustomUser, user_poll_relations: U
 
         elif operation == "everyone_response":
             return everyone_response(user_poll_relations)
-
         elif operation == "single_response":
             return single_response(sequence["target"])
 
         elif operation == "show_MB_list":
             return show_MB_list(user_poll_relations)
-
         elif operation == "show_MB_operation_list":
             return show_MB_operation_list(user_poll_relations)
-
         elif operation == "register_MB":
             return register_MB(sequence["target"])
-
         elif operation == "remove_MB":
             return remove_MB(sequence["target"])
 
         elif operation == "register_primary":
             return register_primary(sequence["target"], user_poll_relations)
-
         elif operation == "remove_primary":
             return remove_primary(sequence["target"], user_poll_relations)
 
         elif operation == "show_all_property":
             return show_all_property(user_poll_relations, user)
-
         elif operation == "show_change_prop_obj_list":
             return show_change_prop_obj_list(user_poll_relations)
-
         elif operation == "show_change_prop_list":
             return show_change_prop_list(sequence["target"])
-
         elif operation == "new_name_input_prompt":
             return new_name_input_prompt(sequence["target"], user)
+        elif operation == "cancel_property_change":
+            return cancel_property_change(user)
 
     result = create_text_message_list("わからない")
     return result
