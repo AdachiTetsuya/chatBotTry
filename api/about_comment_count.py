@@ -21,6 +21,13 @@ def update_continuous_day(comment_count: UserPollCommentCount):
         comment_count.continuous_day_in_level = 0
 
 
+def update_count_value(comment_count: UserPollCommentCount):
+    # カウント値のインクリメント
+    update_continuous_day(comment_count)
+    comment_count.increment_comment_total()
+    comment_count.increment_comment_count_in_level()
+
+
 def update_level(pre_level, poll: UserPollRelation, comment_count: UserPollCommentCount):
     # レベルの更新判定ロジック
     if comment_count.count_in_level >= pre_level * RAISE_LEVEL_COUNT_WEIGHT:
@@ -49,9 +56,8 @@ def update_comment_count_and_relationship_level(poll: UserPollRelation):
 
     instance = UserPollCommentCount.objects.get(user_poll_relation=poll)
 
-    update_continuous_day(instance)
-
-    instance.increment_comment_total()
+    # カウント値のインクリメント
+    update_count_value(instance)
 
     # レベルの更新判定、更新
     update_level(pre_level, poll, instance)
