@@ -1,6 +1,12 @@
 from api.bot_messages import create_quick_reply_button_list, create_text_message_list
-from api.data.constants import POLL_GENDER_LIST
+from api.data.constants import POLL_GENDER_LIST, POLL_GENDER_TUPLE_LIST
 from api.models import UserPollRelation, UserSequence
+
+
+def convert_gender_to_num(gender_str):
+    for tuple_item in POLL_GENDER_TUPLE_LIST:
+        if tuple_item[1] == gender_str:
+            return tuple_item[0]
 
 
 def validate_input(message):
@@ -23,7 +29,7 @@ def change_poll_gender(
         return result
 
     poll: UserPollRelation = user_sequence.target
-    new_gender = message
+    new_gender = convert_gender_to_num(message)
     poll.poll_gender = new_gender
     poll.save()
 
