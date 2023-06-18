@@ -11,7 +11,6 @@ from api.sequences.about_buddy import (
     show_MB_operation_list,
 )
 from api.sequences.change_property import (
-    cancel_property_change,
     new_name_input_prompt,
     show_all_property,
     show_change_prop_list,
@@ -73,8 +72,6 @@ def receive_message_function(event_obj, user: CustomUser, user_poll_relations: U
             return show_change_prop_list(sequence["target"])
         elif operation == "new_name_input_prompt":
             return new_name_input_prompt(sequence["target"], user)
-        elif operation == "cancel_property_change":
-            return cancel_property_change(user)
 
     result = create_text_message_list("わからない")
     return result
