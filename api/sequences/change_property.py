@@ -65,3 +65,12 @@ def new_name_input_prompt(target: UserPollRelation | CustomUser, user: CustomUse
     user_sequence.save()
     result = create_quick_reply_text_list("新しい名前を入力してください。", [("キャンセル", "中断します")])
     return result
+
+
+def new_age_input_prompt(target: UserPollRelation, user: CustomUser):
+    user_sequence = UserSequence.objects.get(user=user)
+    user_sequence.is_change_poll_age = True
+    user_sequence.target = target
+    user_sequence.save()
+    result = create_quick_reply_text_list("新しい年齢を入力してください。", [("キャンセル", "中断します")])
+    return result

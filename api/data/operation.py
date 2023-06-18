@@ -15,4 +15,6 @@ PERSONAL_OPERATION_DATA = {
     "remove_primary": [["プライマリー", "解除"]],
     "show_change_prop_list": [["プロパティ", "変更"]],
     "new_name_input_prompt": [["名前", "変更"]],
+    "new_age_input_prompt": [["年齢", "変更"]],
+    "new_gender_input_prompt": [["性別", "変更"]],
 }
