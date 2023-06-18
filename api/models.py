@@ -3,7 +3,7 @@ import random
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-from api.data.constants import POLL_GENDER_LIST, POLL_GENERATION_LIST
+from api.data.constants import POLL_GENDER_LIST
 
 
 class CustomUser(models.Model):
@@ -141,7 +141,8 @@ class ResponseMessage(models.Model):
     text = models.CharField(max_length=200)
     relationship_level = models.IntegerField("仲の良さ", default=3)
     poll_gender = models.IntegerField("ポールの性別", choices=POLL_GENDER_LIST, blank=True, null=True)
-    poll_generation = models.IntegerField("ポールの発達段階", default=4, choices=POLL_GENERATION_LIST)
+    poll_age_min = models.IntegerField("ポールの年齢の最小値", default=0)
+    poll_age_max = models.IntegerField("ポールの年齢の最大値", default=130)
 
     class Meta:
         verbose_name_plural = "呼ばれたときのメッセージ"

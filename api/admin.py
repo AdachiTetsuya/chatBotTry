@@ -58,7 +58,14 @@ class GreetingMessageAdmin(admin.ModelAdmin):
 
 @admin.register(ResponseMessage)
 class ResponseMessageAdmin(admin.ModelAdmin):
-    list_display = ["id", "text", "relationship_level", "poll_gender", "poll_generation"]
+    list_display = [
+        "id",
+        "text",
+        "relationship_level",
+        "poll_gender",
+        "poll_age_min",
+        "poll_age_max",
+    ]
 
 
 @admin.register(BroadCastMessage)
