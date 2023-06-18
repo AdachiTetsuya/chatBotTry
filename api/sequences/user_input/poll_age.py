@@ -5,7 +5,7 @@ from api.models import UserPollRelation, UserSequence
 def validate_input(message):
     error_msg = ""
     if not message.isnumeric():
-        error_msg = "数値を入力してください"
+        error_msg = "入力された値が数値ではありません"
 
     elif message < 0 or message > 130:
         error_msg = "年齢は 0歳以上、130歳以下で入力してください"
