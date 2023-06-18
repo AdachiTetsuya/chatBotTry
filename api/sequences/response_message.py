@@ -1,5 +1,5 @@
 from api.bot_messages import create_quick_reply_text_list, create_text_message_list
-from api.models import ResponseMessage
+from api.models import ResponseMessage, UserPollRelation
 
 
 def everyone_response(user_poll_relations):
@@ -18,8 +18,12 @@ def everyone_response(user_poll_relations):
     return result
 
 
-def single_response(user_poll_relation):
-    message = ResponseMessage.objects.order_by("?").first()
+def single_response(user_poll_relation: UserPollRelation):
+    relationship_level = user_poll_relation.relationship_level
+
+    message = (
+        ResponseMessage.objects.filter(relationship_level=relationship_level).order_by("?").first()
+    )
     formatted_message = "{}: 「{}」".format(user_poll_relation.poll_name, message.text)
     result = create_text_message_list(formatted_message)
     return result
