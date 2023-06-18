@@ -19,11 +19,18 @@ def everyone_response(user_poll_relations):
 
 
 def single_response(user_poll_relation: UserPollRelation):
-    # relationship_level = user_poll_relation.relationship_level
     poll_age = user_poll_relation.poll_age
+    poll_gender = user_poll_relation.poll_gender
+    relationship_level = user_poll_relation.relationship_level
 
     message = (
-        ResponseMessage.objects.filter(poll_age_min__lte=poll_age, poll_age_max__gte=poll_age)
+        ResponseMessage.objects.filter(
+            poll_age_min__lte=poll_age,
+            poll_age_max__gte=poll_age,
+            poll_gender__in=[poll_gender, 3],
+            relationship_level_min__lte=relationship_level,
+            relationship_level_max__gte=relationship_level,
+        )
         .order_by("?")
         .first()
     )

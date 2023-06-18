@@ -61,7 +61,8 @@ class ResponseMessageAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "text",
-        "relationship_level",
+        "relationship_level_min",
+        "relationship_level_max",
         "poll_gender",
         "poll_age_min",
         "poll_age_max",
