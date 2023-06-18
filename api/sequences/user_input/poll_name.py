@@ -8,7 +8,7 @@ def validate_input(message, name_list):
         error_msg = "名前が長すぎます。"
 
     if message in name_list:
-        error_msg = f"{message}という名前は重複があります。"
+        error_msg = f"{message} という名前は重複があります。"
 
     return error_msg
 
