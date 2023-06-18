@@ -1,4 +1,4 @@
-from api.bot_messages import create_text_message_list
+from api.bot_messages import create_quick_reply_text_list
 from api.models import UserSequence
 from api.utils import get_message_text, get_message_type
 
@@ -13,7 +13,7 @@ def manage_property_input(event_obj, user, user_poll_relations):
         return
 
     if message_type != "text":
-        return create_text_message_list("有効な文字列を入力してください")
+        return create_quick_reply_text_list("新しい名前を入力してください。", [("キャンセル", "中断します")])
 
     message = get_message_text(event_obj)
     if user_sequence.is_change_poll_name:
