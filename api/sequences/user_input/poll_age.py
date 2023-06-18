@@ -2,19 +2,29 @@ from api.bot_messages import create_quick_reply_text_list, create_text_message_l
 from api.models import UserPollRelation, UserSequence
 
 
+def represents_int(s):
+    try:
+        int(s)
+    except ValueError:
+        return False
+    else:
+        return True
+
+
 def validate_input(message):
     error_msg = ""
-    if not message.isnumeric():
+
+    if not represents_int(message):
         error_msg = "入力された値が数値ではありません"
 
-    elif message < 0 or message > 130:
+    elif int(message) < 0 or int(message) > 130:
         error_msg = "年齢は 0歳以上、130歳以下で入力してください"
 
     return error_msg
 
 
 def change_poll_age(
-    message,
+    message: str,
     user_sequence: UserSequence,
 ):
     # validation
@@ -24,7 +34,7 @@ def change_poll_age(
         return result
 
     poll: UserPollRelation = user_sequence.target
-    new_age = message
+    new_age = int(message)
     poll.poll_age = new_age
     poll.save()
 
