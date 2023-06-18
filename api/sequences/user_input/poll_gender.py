@@ -29,8 +29,8 @@ def change_poll_gender(
         return result
 
     poll: UserPollRelation = user_sequence.target
-    new_gender = convert_gender_to_num(message)
-    poll.poll_gender = new_gender
+    new_gender = message
+    poll.poll_gender = convert_gender_to_num(new_gender)
     poll.save()
 
     user_sequence.is_change_poll_gender = False
