@@ -52,4 +52,4 @@ def change_name(
     user_sequence.is_change_name = False
     user_sequence.save()
 
-    return create_text_message_list(f"{pre_name} の名前を {new_name} に変更しました")
+    return create_text_message_list(f"{pre_name}の名前を {new_name} に変更しました")
