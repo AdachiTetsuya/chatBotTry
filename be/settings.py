@@ -151,16 +151,16 @@ ADMINS = list(
     )
 )
 
-CELERY_BROKER_URL = "redis://localhost:6379/1"
-CELERY_RESULT_BACKEND = "django-db"
-CELERY_BEAT_SCHEDULE = {
-    "sample_task": {
-        "task": "be.tasks.say_hello",
-        "schedule": crontab(),
-    },
-}
-CELERY_TIMEZONE = "UTC"
-CELERY_IMPORTS = ("be.tasks",)
+# CELERY_BROKER_URL = "redis://localhost:6379/1"
+# CELERY_RESULT_BACKEND = "django-db"
+# CELERY_BEAT_SCHEDULE = {
+#     "sample_task": {
+#         "task": "be.tasks.say_hello",
+#         "schedule": crontab(),
+#     },
+# }
+# CELERY_TIMEZONE = "UTC"
+# CELERY_IMPORTS = ("be.tasks",)
 
 
 LOGGING = {

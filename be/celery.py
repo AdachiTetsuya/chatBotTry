@@ -1,15 +1,15 @@
-from __future__ import absolute_import, unicode_literals
+# from __future__ import absolute_import, unicode_literals
 
-import os
+# import os
 
-from celery import Celery
-from dotenv import load_dotenv
+# from celery import Celery
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "be.settings")
-app = Celery("be")
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "be.settings")
+# app = Celery("be")
 
-app.config_from_object("django.conf:settings", namespace="CELERY")
+# app.config_from_object("django.conf:settings", namespace="CELERY")
 
-app.autodiscover_tasks()
+# app.autodiscover_tasks()
