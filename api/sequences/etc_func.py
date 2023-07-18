@@ -24,3 +24,8 @@ def show_temperature():
     dialog = create_quick_reply_text_list("もっと知りたいですか？", [("はい", "気象の詳細を教えて"), ("いいえ", "結構です")])
     text_list.extend(dialog)
     return text_list
+
+
+def show_weather_detail():
+    text_list = create_text_message_list("気象の詳細データです")
+    return text_list

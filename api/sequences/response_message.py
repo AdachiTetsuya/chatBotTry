@@ -34,6 +34,9 @@ def single_response(user_poll_relation: UserPollRelation):
         .order_by("?")
         .first()
     )
+
+    if not message:
+        message = ResponseMessage.objects.all().order_by("?").first()
     formatted_message = "{}: 「{}」".format(user_poll_relation.poll_name, message.text)
     result = create_text_message_list(formatted_message)
     return result
