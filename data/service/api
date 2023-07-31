@@ -1,6 +1,5 @@
 server {
-    server_name "18.176.87.68";
-    listen 80;
+    server_name "api.tetusya-site.link";
 
     location / {
         # Gunicorn にリクエストを中継するときに必要な追加情報を設定する
@@ -11,4 +10,27 @@ server {
 
         proxy_pass http://unix:/run/gunicorn.sock;
     }
+    location /static {
+        alias /home/ubuntu/chatBotTry/static/;
+        access_log off;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/api.tetusya-site.link/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/api.tetusya-site.link/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = api.tetusya-site.link) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name "api.tetusya-site.link";
+    listen 80;
+    return 404; # managed by Certbot
+
+
 }

@@ -13,10 +13,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from pathlib import Path
 
+from celery.schedules import crontab
+
 from .utils import strtobool
-
-# from celery.schedules import crontab
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,8 +43,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "django_extensions",
-    # "django_celery_beat",
-    # "django_celery_results",
+    "django_celery_beat",
+    "django_celery_results",
 ]
 
 MIDDLEWARE = [
@@ -152,16 +151,16 @@ ADMINS = list(
     )
 )
 
-# CELERY_BROKER_URL = "redis://localhost:6379/1"
-# CELERY_RESULT_BACKEND = "django-db"
-# CELERY_BEAT_SCHEDULE = {
-#     "sample_task": {
-#         "task": "be.tasks.say_hello",
-#         "schedule": crontab(),
-#     },
-# }
-# CELERY_TIMEZONE = "UTC"
-# CELERY_IMPORTS = ("be.tasks",)
+CELERY_BROKER_URL = "redis://localhost:6379/1"
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_BEAT_SCHEDULE = {
+    "sample_task": {
+        "task": "api.tasks.say_hello",
+        "schedule": crontab(),
+    },
+}
+CELERY_TIMEZONE = "UTC"
+CELERY_IMPORTS = ("api.tasks",)
 
 
 LOGGING = {
