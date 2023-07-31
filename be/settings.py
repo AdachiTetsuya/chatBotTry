@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from pathlib import Path
 
-from celery.schedules import crontab
-
 from .utils import strtobool
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -153,14 +151,7 @@ ADMINS = list(
 
 CELERY_BROKER_URL = "redis://localhost:6379/1"
 CELERY_RESULT_BACKEND = "django-db"
-CELERY_BEAT_SCHEDULE = {
-    "sample_task": {
-        "task": "api.tasks.say_hello",
-        "schedule": crontab(),
-    },
-}
-CELERY_TIMEZONE = "UTC"
-CELERY_IMPORTS = ("api.tasks",)
+CELERY_CACHE_BACKEND = "django-cache"
 
 
 LOGGING = {
