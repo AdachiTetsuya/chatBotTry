@@ -82,6 +82,9 @@ def receive_message_function(event_obj, user: CustomUser, user_poll_relations: U
         elif operation == "new_gender_input_prompt":
             return new_gender_input_prompt(sequence["target"], user)
 
-    result = create_text_message_list(get_chatterbot_message(event_obj))
+    not_ope_replay = get_chatterbot_message(event_obj)
+    logger.info(not_ope_replay)
+    logger.info(type(not_ope_replay))
+    result = create_text_message_list(not_ope_replay)
     logger.info(result)
     return result
