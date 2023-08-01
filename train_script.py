@@ -1,12 +1,12 @@
 from chatterbot import ChatBot
-
-# from chatterbot.trainers import ChatterBotCorpusTrainer
-import languages  # 自作言語モジュール
+from chatterbot.trainers import ChatterBotCorpusTrainer
 
 chatbot = ChatBot(
     "test",
-    tagger_language=languages.GINZA,
     database_uri="sqlite:///database.db",
 )
+trainer = ChatterBotCorpusTrainer(chatbot)
+trainer.train("chatterbot.corpus.japanese")
 
 response = chatbot.get_response("調子はどう？")
+print(response)
