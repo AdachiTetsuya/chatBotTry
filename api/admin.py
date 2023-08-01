@@ -25,7 +25,15 @@ class SmartPollAdmin(admin.ModelAdmin):
 
 @admin.register(UserPollRelation)
 class UserPollRelationAdmin(admin.ModelAdmin):
-    list_display = ["id", "user", "smart_poll", "poll_name", "poll_age", "relationship_level"]
+    list_display = [
+        "id",
+        "user",
+        "smart_poll",
+        "poll_name",
+        "poll_age",
+        "is_buddy",
+        "relationship_level",
+    ]
 
 
 @admin.register(UserPollCommentCount)
