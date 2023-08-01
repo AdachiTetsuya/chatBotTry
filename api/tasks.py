@@ -10,16 +10,16 @@ line_message = LineBotMSG()
 
 
 def get_weather_data_sentence(poll: SmartPoll, weather_data):
-    temperature = weather_data.get("temperature")
-    humidity = weather_data.get("humidity")
+    # temperature = weather_data.get("temperature")
+    # humidity = weather_data.get("humidity")
     uv_level = weather_data.get("UV")
 
     result = ""
-    if poll.default_name == "ケイ":
-        result = f"今日の気温は{temperature}度です、暑い..."
-    if poll.default_name == "ユウ":
-        result = f"今日の湿度は{humidity}%です!カラっから！"
-    if poll.default_name == "ケイ":
+    # if poll.default_name == "ケイ":
+    #     result = f"今日の気温は{temperature}度です、暑い..."
+    # if poll.default_name == "ユウ":
+    #     result = f"今日の湿度は{humidity}%です!カラっから！"
+    if poll.default_name == "ソラ":
         result = f"今日の紫外線は UVレベル{uv_level} です、お肌をお大事に！"
 
     return result
