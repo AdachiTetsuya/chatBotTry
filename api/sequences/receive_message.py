@@ -1,6 +1,7 @@
 import logging
 
 from api.bot_messages import create_text_message_list
+from api.chatter_bot_func import get_chatterbot_message
 from api.models import CustomUser, UserPollRelation
 from api.sequences.about_buddy import (
     register_MB,
@@ -81,5 +82,5 @@ def receive_message_function(event_obj, user: CustomUser, user_poll_relations: U
         elif operation == "new_gender_input_prompt":
             return new_gender_input_prompt(sequence["target"], user)
 
-    result = create_text_message_list("わからない")
+    result = create_text_message_list(get_chatterbot_message(event_obj))
     return result
