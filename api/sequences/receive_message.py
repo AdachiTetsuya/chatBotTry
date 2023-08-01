@@ -83,4 +83,5 @@ def receive_message_function(event_obj, user: CustomUser, user_poll_relations: U
             return new_gender_input_prompt(sequence["target"], user)
 
     result = create_text_message_list(get_chatterbot_message(event_obj))
+    logger.info(result)
     return result
