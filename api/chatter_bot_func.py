@@ -18,4 +18,7 @@ def get_chatterbot_message(event_obj):
     logger.info(message)
     response = chatbot.get_response(message)
     logger.info(response)
-    return response
+    response_data = response.serialize()
+
+    logger.info(response_data)
+    return response_data
