@@ -9,4 +9,5 @@ trainer = ChatterBotCorpusTrainer(chatbot)
 trainer.train("chatterbot.corpus.japanese")
 
 response = chatbot.get_response("調子はどう？")
+
 print(response)
