@@ -5,7 +5,7 @@ tagger = MeCab.Tagger("")
 tagger.parse("")
 
 
-def wakati_text(text, select_conditions=["動詞", "形容詞", "名詞"]):
+def wakati_text(text, select_conditions=["動詞", "形容詞", "名詞", "感動詞"]):
     # 分けてノードごとにする
     node = tagger.parseToNode(text)
     terms = []
@@ -22,5 +22,4 @@ def wakati_text(text, select_conditions=["動詞", "形容詞", "名詞"]):
             terms.append(term)
 
         node = node.next
-
     return terms
