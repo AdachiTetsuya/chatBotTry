@@ -21,6 +21,7 @@ def judge_sequence_from_message(event_obj, user_poll_relations, user):
     target_poll = judge_poll_name_contain(message, user_poll_relations)
 
     separated_text_list = wakati_text(message)
+    logger.info(separated_text_list)
 
     result = {"operation": "", "target": ""}
 
