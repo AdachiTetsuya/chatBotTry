@@ -13,12 +13,8 @@ chatbot = ChatBot(
 
 
 def get_chatterbot_message(event_obj):
-    logger.info(event_obj)
     message = get_message_text(event_obj)
-    logger.info(message)
     response = chatbot.get_response(message)
-    logger.info(response)
     response_data = response.serialize().get("text")
 
-    logger.info(response_data)
     return response_data

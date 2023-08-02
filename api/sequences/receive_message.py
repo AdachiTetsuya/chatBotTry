@@ -95,8 +95,6 @@ def receive_message_function(event_obj, user: CustomUser, user_poll_relations: U
             return quick_replay_no()
 
     not_ope_replay = get_chatterbot_message(event_obj)
-    logger.info(not_ope_replay)
-    logger.info(type(not_ope_replay))
+
     result = create_text_message_list(not_ope_replay)
-    logger.info(result)
     return result
