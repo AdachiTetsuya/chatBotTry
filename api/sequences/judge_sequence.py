@@ -1,8 +1,12 @@
+import logging
+
 from api.about_comment_count import update_comment_count_and_relationship_level
 from api.data.operation import OPERATION_DATA, PERSONAL_OPERATION_DATA
 from api.mecab_function import wakati_text
 from api.models import UserPollRelation
 from api.utils import get_message_text
+
+logger = logging.getLogger("api")
 
 
 def judge_poll_name_contain(message, user_poll_relations: list[UserPollRelation]):

@@ -46,6 +46,7 @@ def receive_message_function(event_obj, user: CustomUser, user_poll_relations: U
     """
 
     sequence = judge_sequence_from_message(event_obj, user_poll_relations, user)
+    logger.info(sequence)
 
     if operation := sequence["operation"]:
         if operation == "sky_photo":
