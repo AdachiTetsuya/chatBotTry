@@ -38,5 +38,5 @@ def show_weather_detail():
 
     data_text = f"気温: {temperature}度\n湿度: {humidity}%\n気圧: {pressure}hPa\nUV Level: {UV_level}"
 
-    text_list = create_text_message_list([title, data_text])
+    text_list = create_text_message_list(title, data_text)
     return text_list
