@@ -36,7 +36,7 @@ def show_weather_detail():
     pressure = weather_api.get_pressure()
     UV_level = weather_api.get_UV_level()
 
-    data_text = f"気温: {temperature}度\n湿度: {humidity}%\n気圧: {pressure}hPa\nUV Level: {UV_level}"
+    data_text = f"気温: {temperature}度\n湿度: {humidity} %\n気圧: {pressure} hPa\nUV: Level {UV_level}"
 
     text_list = create_text_message_list(title, data_text)
     return text_list
