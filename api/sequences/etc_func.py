@@ -24,7 +24,7 @@ def show_temperature():
     temperature = smart_poll.get_temperature()
     comment = judge_comment_from_temperature(temperature)
     text_list = create_text_message_list(f"今日の気温は{temperature}度です。{comment}")
-    dialog = create_quick_reply_text_list("もっと知りたいですか？", [("はい", "気象の詳細を教えて"), ("いいえ", "結構です")])
+    dialog = create_quick_reply_text_list("もっと知りたいですか？", [("はい", "気象の詳細を教えて"), ("いいえ", "いいえ")])
     text_list.extend(dialog)
     return text_list
 
