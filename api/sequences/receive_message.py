@@ -20,6 +20,7 @@ from api.sequences.change_property import (
     show_change_prop_obj_list,
 )
 from api.sequences.etc_func import (
+    quick_replay_no,
     show_people_level,
     show_temperature,
     show_weather_detail,
@@ -88,6 +89,9 @@ def receive_message_function(event_obj, user: CustomUser, user_poll_relations: U
             return new_age_input_prompt(sequence["target"], user)
         elif operation == "new_gender_input_prompt":
             return new_gender_input_prompt(sequence["target"], user)
+
+        elif operation == "quick_replay_no":
+            return quick_replay_no()
 
     not_ope_replay = get_chatterbot_message(event_obj)
     logger.info(not_ope_replay)

@@ -58,3 +58,8 @@ def show_people_level():
     text_data = f"今日の賑わい具合はレベル{people_level}です。{comment}"
     text_list = create_text_message_list(text_data)
     return text_list
+
+
+def quick_replay_no():
+    text_list = create_text_message_list("りょーかいです！")
+    return text_list
