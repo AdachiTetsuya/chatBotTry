@@ -5,6 +5,9 @@ from api.bot_messages import (
 )
 from api.models import SmartPoll
 from api.utils import judge_comment_from_temperature
+from api.weather_base import WeatherApi
+
+weather_api = WeatherApi()
 
 
 def sky_photo():
@@ -27,5 +30,13 @@ def show_temperature():
 
 
 def show_weather_detail():
-    text_list = create_text_message_list("気象の詳細データです")
+    title = "気象の詳細データです"
+    temperature = weather_api.get_temperature()
+    humidity = weather_api.get_humidity()
+    pressure = weather_api.get_pressure()
+    UV_level = weather_api.get_UV_level()
+
+    data_text = f"気温: {temperature}度\n湿度: {humidity}%\n気圧: {pressure}hPa\nUV Level: {UV_level}"
+
+    text_list = create_text_message_list([title, data_text])
     return text_list
