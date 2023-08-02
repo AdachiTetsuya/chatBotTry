@@ -21,3 +21,8 @@ class WeatherApi:
         """UV レベルの取得"""
         UV_level = random.randint(1, 5)
         return UV_level
+
+    def get_people_level(self):
+        """賑わい具合の取得"""
+        people_level = random.randint(1, 5)
+        return people_level

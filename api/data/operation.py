@@ -3,6 +3,7 @@ OPERATION_DATA = {
     "sky_photo": ["空", "夜空", "雲"],
     "show_temperature": ["気温", "温度"],
     "show_weather_detail": [["気象", "詳細"]],
+    "show_people_level": ["賑わい", "混雑", "人混み"],
     "show_MB_list": [["MyBuddy", "一覧"]],
     "show_MB_operation_list": [["MyBuddy", "編集"]],
     "show_all_property": [["プロパティ", "一覧"]],

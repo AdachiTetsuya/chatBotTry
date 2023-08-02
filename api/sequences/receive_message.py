@@ -19,7 +19,12 @@ from api.sequences.change_property import (
     show_change_prop_list,
     show_change_prop_obj_list,
 )
-from api.sequences.etc_func import show_temperature, show_weather_detail, sky_photo
+from api.sequences.etc_func import (
+    show_people_level,
+    show_temperature,
+    show_weather_detail,
+    sky_photo,
+)
 from api.sequences.judge_sequence import judge_sequence_from_message
 from api.sequences.response_message import everyone_response, single_response
 
@@ -48,6 +53,8 @@ def receive_message_function(event_obj, user: CustomUser, user_poll_relations: U
             return show_temperature()
         elif operation == "show_weather_detail":
             return show_weather_detail()
+        elif operation == "show_people_level":
+            return show_people_level()
 
         elif operation == "everyone_response":
             return everyone_response(user_poll_relations)

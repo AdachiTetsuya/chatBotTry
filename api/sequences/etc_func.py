@@ -44,3 +44,17 @@ def show_weather_detail():
     image_list = create_image_message_list(url)
     text_list.extend(image_list)
     return text_list
+
+
+def show_people_level():
+    people_level = weather_api.get_people_level()
+    comment = ""
+    if people_level < 3:
+        comment = "あんまり人がいないですね。"
+    if people_level == 3:
+        comment = "普通くらいですね。"
+    if people_level > 3:
+        comment = "たくさん人がいますね。"
+    text_data = f"今日の賑わい具合はレベル{people_level}です。{comment}"
+    text_list = create_text_message_list(text_data)
+    return text_list
